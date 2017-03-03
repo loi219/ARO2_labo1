@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project integrity="fa8bdf7020d8776474ae267dbc14914bb2e486f1" source="2.13.23.t" version="1.0">
+<project integrity="56550c988f0fb9f797f21f5497884901045c9666" source="2.13.23.t" version="1.0">
 This file is intended to be loaded by Logisim-evolution (https://github.com/reds-heig/logisim-evolution).
 <lib desc="#Wiring" name="0">
     <tool name="Splitter">
@@ -30,6 +30,7 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
   <lib desc="#Gates" name="1"/>
   <lib desc="#Plexers" name="2">
     <tool name="Multiplexer">
+      <a name="width" val="16"/>
       <a name="enable" val="false"/>
       <a name="owner" val="autogen:prodis"/>
       <a name="date" val="18.02.15 14:33:55"/>
@@ -151,13 +152,8 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(200,20)" to="(200,90)"/>
     <wire from="(20,20)" to="(20,90)"/>
     <wire from="(20,90)" to="(200,90)"/>
-    <wire from="(290,40)" to="(330,40)"/>
     <wire from="(20,20)" to="(200,20)"/>
-    <comp lib="0" loc="(330,40)" name="Tunnel">
-      <a name="label" val="clk"/>
-    </comp>
-    <comp lib="6" loc="(239,266)" name="Text"/>
-    <comp lib="6" loc="(309,597)" name="Text"/>
+    <wire from="(290,40)" to="(330,40)"/>
     <comp lib="6" loc="(96,40)" name="Text">
       <a name="text" val="LABO ARO 2 - FETCH"/>
       <a name="font" val="SansSerif bold 13"/>
@@ -166,7 +162,31 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="text" val="Date : 25.02.2014"/>
       <a name="font" val="SansSerif plain 13"/>
     </comp>
-    <comp lib="6" loc="(103,80)" name="Text">
+    <comp lib="6" loc="(239,266)" name="Text"/>
+    <comp lib="0" loc="(290,40)" name="Clock">
+      <a name="highDuration" val="4"/>
+      <a name="lowDuration" val="4"/>
+      <a name="label" val="clk"/>
+      <a name="owner" val="autogen:prodis"/>
+      <a name="date" val="18.02.15 14:33:55"/>
+      <a name="version" val="2.13.5"/>
+      <a name="uuid" val="da278363-6f36-461c-b04d-b5d897877917"/>
+      <a name="integrity" val="9218dfb4c1b4b3aa53e118927a89e61dc95158ea"/>
+    </comp>
+    <comp lib="6" loc="(309,597)" name="Text"/>
+    <comp lib="0" loc="(350,190)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="15"/>
+      <a name="labelloc" val="east"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="03.03.17 09:54:29"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="6221bec0-c38f-4bb9-89e8-52c5afeeb45c"/>
+      <a name="integrity" val="185fbe99c980908aa34ce21fa64168bfcc8ed447"/>
+    </comp>
+    <comp lib="6" loc="(99,60)" name="Text">
+      <a name="text" val="HEIG-VD / Institut REDS"/>
       <a name="font" val="SansSerif plain 13"/>
     </comp>
     <comp lib="0" loc="(290,60)" name="Clock">
@@ -177,22 +197,26 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="9291d233-80c8-490c-a37d-fc14bc364185"/>
       <a name="integrity" val="08e9fa442044370df5a5c40a7a3b4c6bf548daa0"/>
     </comp>
-    <comp lib="6" loc="(309,19)" name="Text">
-      <a name="text" val="Ne pas modifier les noms des clocks"/>
-    </comp>
-    <comp lib="6" loc="(99,60)" name="Text">
-      <a name="text" val="HEIG-VD / Institut REDS"/>
+    <comp lib="6" loc="(103,80)" name="Text">
       <a name="font" val="SansSerif plain 13"/>
     </comp>
-    <comp lib="0" loc="(290,40)" name="Clock">
-      <a name="highDuration" val="4"/>
-      <a name="lowDuration" val="4"/>
+    <comp lib="0" loc="(330,40)" name="Tunnel">
       <a name="label" val="clk"/>
-      <a name="owner" val="autogen:prodis"/>
-      <a name="date" val="18.02.15 14:33:55"/>
-      <a name="version" val="2.13.5"/>
-      <a name="uuid" val="da278363-6f36-461c-b04d-b5d897877917"/>
-      <a name="integrity" val="9218dfb4c1b4b3aa53e118927a89e61dc95158ea"/>
+    </comp>
+    <comp loc="(350,190)" name="PCINC_16BITS"/>
+    <comp lib="0" loc="(200,190)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="clk"/>
+    </comp>
+    <comp lib="0" loc="(200,210)" name="Pin">
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="03.03.17 09:54:09"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="67aa871f-462b-4142-8d5f-deb8838d29c5"/>
+      <a name="integrity" val="bc7a81e30d372dff1bc9cda94c453c07b0564146"/>
+    </comp>
+    <comp lib="6" loc="(309,19)" name="Text">
+      <a name="text" val="Ne pas modifier les noms des clocks"/>
     </comp>
     <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
       <a name="text" val="Attention, votre version de Logisim"/>
@@ -227,34 +251,29 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <a name="clabelfont" val="SansSerif bold 12"/>
     <a name="circuitnamedbox" val="true"/>
     <a name="circuitvhdlpath" val=""/>
-    <wire from="(540,220)" to="(600,220)"/>
-    <wire from="(130,210)" to="(160,210)"/>
-    <wire from="(130,170)" to="(160,170)"/>
-    <wire from="(70,120)" to="(70,160)"/>
+    <wire from="(470,170)" to="(500,170)"/>
+    <wire from="(60,120)" to="(60,160)"/>
     <wire from="(190,230)" to="(190,270)"/>
-    <wire from="(70,120)" to="(220,120)"/>
-    <wire from="(70,160)" to="(90,160)"/>
-    <wire from="(70,180)" to="(90,180)"/>
-    <wire from="(220,120)" to="(220,170)"/>
-    <wire from="(220,170)" to="(300,170)"/>
-    <comp lib="0" loc="(130,210)" name="Clock">
-      <a name="highDuration" val="4"/>
-      <a name="lowDuration" val="4"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:34:53"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="ed38b7f9-db42-4140-ae64-97bcd237c076"/>
-      <a name="integrity" val="192441bd0873d4bced735e9841638ee6808ac7a1"/>
+    <wire from="(50,180)" to="(70,180)"/>
+    <wire from="(470,160)" to="(470,170)"/>
+    <wire from="(60,120)" to="(240,120)"/>
+    <wire from="(110,210)" to="(160,210)"/>
+    <wire from="(220,170)" to="(240,170)"/>
+    <wire from="(110,170)" to="(160,170)"/>
+    <wire from="(240,170)" to="(350,170)"/>
+    <wire from="(240,120)" to="(240,170)"/>
+    <wire from="(740,220)" to="(780,220)"/>
+    <wire from="(60,160)" to="(70,160)"/>
+    <wire from="(370,160)" to="(470,160)"/>
+    <comp lib="4" loc="(500,160)" name="ROM">
+      <a name="addrWidth" val="15"/>
+      <a name="dataWidth" val="15"/>
+      <a name="contents">addr/data: 15 15
+2103 188b 18cc 2502
+</a>
+      <a name="label" val="MEM_INSTRU"/>
     </comp>
-    <comp lib="3" loc="(130,170)" name="Adder">
-      <a name="width" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:38:18"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="73bbaa1b-b60c-4d58-91b7-e561637cb748"/>
-      <a name="integrity" val="953e9507df3d2bc42e59f841a6323d08d7f3b87c"/>
-    </comp>
-    <comp lib="0" loc="(70,180)" name="Constant">
+    <comp lib="0" loc="(50,180)" name="Constant">
       <a name="width" val="16"/>
       <a name="value" val="0x2"/>
     </comp>
@@ -267,6 +286,35 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="cdc3d408-ff44-445c-95f5-7c9c1440eb06"/>
       <a name="integrity" val="fa42c85d7c9771a61f7bbd39f38a17e2b72faa78"/>
     </comp>
+    <comp lib="0" loc="(110,210)" name="Pin">
+      <a name="label" val="clk"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="03.03.17 09:53:44"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="ad1344db-3f6b-4bba-be72-16e6857cb4da"/>
+      <a name="integrity" val="92381ccc448ee70533f48e3c06dca77a95167815"/>
+    </comp>
+    <comp lib="3" loc="(110,170)" name="Adder">
+      <a name="width" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:38:18"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="73bbaa1b-b60c-4d58-91b7-e561637cb748"/>
+      <a name="integrity" val="953e9507df3d2bc42e59f841a6323d08d7f3b87c"/>
+    </comp>
+    <comp lib="0" loc="(780,220)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="15"/>
+      <a name="label" val="FETCH_OUT"/>
+      <a name="labelloc" val="east"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:27:40"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="e911880c-d4f8-42ff-933e-19e4ee216947"/>
+      <a name="integrity" val="a4164fb08d923965d1a4c95e2d944935a45ff8aa"/>
+    </comp>
     <comp lib="0" loc="(190,270)" name="Pin">
       <a name="facing" val="north"/>
       <a name="label" val="CLR"/>
@@ -276,26 +324,32 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="2b503120-7685-4c4a-8bce-780b05444551"/>
       <a name="integrity" val="094848726b5716451d35cc77d68c170f4bcf670f"/>
     </comp>
-    <comp lib="4" loc="(300,160)" name="ROM">
-      <a name="addrWidth" val="16"/>
-      <a name="dataWidth" val="16"/>
-      <a name="contents">addr/data: 16 16
-2000 188b
-</a>
-      <a name="label" val="MEM_INSTRU"/>
-    </comp>
-    <comp lib="0" loc="(600,220)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="16"/>
-      <a name="labelloc" val="east"/>
-      <a name="radix" val="16"/>
+    <comp lib="0" loc="(350,170)" name="Splitter">
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="16"/>
       <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:27:40"/>
+      <a name="date" val="03.03.17 09:48:17"/>
       <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="e911880c-d4f8-42ff-933e-19e4ee216947"/>
-      <a name="integrity" val="a4164fb08d923965d1a4c95e2d944935a45ff8aa"/>
+      <a name="uuid" val="9f815c9e-33b6-4ae2-b3e4-a83fa417bbca"/>
+      <a name="integrity" val="cad3bd66196de8f27d3a19a3cee9241a28cf5717"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="0"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="0"/>
+      <a name="bit4" val="0"/>
+      <a name="bit5" val="0"/>
+      <a name="bit6" val="0"/>
+      <a name="bit7" val="0"/>
+      <a name="bit8" val="0"/>
+      <a name="bit9" val="0"/>
+      <a name="bit10" val="0"/>
+      <a name="bit11" val="0"/>
+      <a name="bit12" val="0"/>
+      <a name="bit13" val="0"/>
+      <a name="bit14" val="0"/>
+      <a name="bit15" val="0"/>
     </comp>
+    <comp lib="0" loc="(160,190)" name="Constant"/>
     <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
       <a name="text" val="Attention, votre version de Logisim"/>
       <a name="font" val="SansSerif plain 48"/>
