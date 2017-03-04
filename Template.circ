@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project integrity="987c1364ee5953b8c3bdd54a3f642939c487df7b" source="2.13.24.t" version="1.0">
+<project integrity="b61c87ddbe6eba59443c445a3d52be1d2510f8a0" source="2.13.24.t" version="1.0">
 This file is intended to be loaded by Logisim-evolution (https://github.com/reds-heig/logisim-evolution).
 <lib desc="#Wiring" name="0">
     <tool name="Splitter">
@@ -428,28 +428,40 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <a name="circuitnamedbox" val="true"/>
     <a name="circuitvhdlpath" val=""/>
     <wire from="(920,210)" to="(920,220)"/>
-    <wire from="(580,80)" to="(620,80)"/>
-    <wire from="(540,160)" to="(580,160)"/>
-    <wire from="(270,190)" to="(270,210)"/>
+    <wire from="(60,170)" to="(180,170)"/>
+    <wire from="(270,190)" to="(270,390)"/>
+    <wire from="(540,160)" to="(600,160)"/>
+    <wire from="(280,390)" to="(280,400)"/>
+    <wire from="(60,170)" to="(60,190)"/>
     <wire from="(290,170)" to="(400,170)"/>
     <wire from="(240,180)" to="(240,200)"/>
-    <wire from="(580,80)" to="(580,160)"/>
+    <wire from="(600,80)" to="(600,160)"/>
     <wire from="(220,160)" to="(260,160)"/>
     <wire from="(170,120)" to="(170,150)"/>
-    <wire from="(140,200)" to="(240,200)"/>
+    <wire from="(120,200)" to="(220,200)"/>
     <wire from="(460,170)" to="(500,170)"/>
-    <wire from="(150,170)" to="(180,170)"/>
+    <wire from="(50,210)" to="(80,210)"/>
+    <wire from="(600,80)" to="(620,80)"/>
     <wire from="(500,170)" to="(520,170)"/>
+    <wire from="(220,200)" to="(220,240)"/>
     <wire from="(920,220)" to="(950,220)"/>
+    <wire from="(60,190)" to="(80,190)"/>
     <wire from="(430,230)" to="(430,270)"/>
-    <wire from="(580,160)" to="(670,160)"/>
     <wire from="(240,180)" to="(260,180)"/>
+    <wire from="(220,200)" to="(240,200)"/>
     <wire from="(390,210)" to="(400,210)"/>
     <wire from="(390,190)" to="(400,190)"/>
+    <wire from="(270,390)" to="(280,390)"/>
+    <wire from="(600,160)" to="(670,160)"/>
     <wire from="(170,150)" to="(180,150)"/>
     <wire from="(170,120)" to="(500,120)"/>
     <wire from="(500,120)" to="(500,170)"/>
+    <wire from="(50,170)" to="(60,170)"/>
     <wire from="(910,210)" to="(920,210)"/>
+    <comp lib="0" loc="(220,240)" name="Probe">
+      <a name="facing" val="north"/>
+      <a name="radix" val="16"/>
+    </comp>
     <comp lib="0" loc="(390,190)" name="Constant"/>
     <comp lib="4" loc="(400,140)" name="Register">
       <a name="width" val="16"/>
@@ -484,10 +496,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="version" val="2.13.23.t"/>
       <a name="uuid" val="e02eb765-9746-4dac-9bbe-a2d7957612b7"/>
       <a name="integrity" val="ec379200fb16b56c56bb70ce15cbfd5a36b45fe7"/>
-    </comp>
-    <comp lib="0" loc="(140,200)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x2024"/>
     </comp>
     <comp lib="0" loc="(520,170)" name="Splitter">
       <a name="fanout" val="1"/>
@@ -527,6 +535,23 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="c82046e5-21bd-499c-8847-6d79f0a8e6cd"/>
       <a name="integrity" val="a04d22f716b94885403b704cae6d121797dca223"/>
     </comp>
+    <comp lib="3" loc="(120,200)" name="Multiplier">
+      <a name="width" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 11:58:47"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="f5a21b73-9104-4a2c-8d7a-8792aef71584"/>
+      <a name="integrity" val="8e281da1026fa9818173e6940d676434395a14ed"/>
+    </comp>
+    <comp lib="0" loc="(280,400)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="label" val="JUMP"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="03.03.17 09:53:44"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="b59731a3-a41f-4798-a90a-d1483d7ba8e4"/>
+      <a name="integrity" val="9290511794987aa69669b8aae7d95e485ebb7097"/>
+    </comp>
     <comp lib="0" loc="(390,210)" name="Pin">
       <a name="label" val="clk"/>
       <a name="owner" val="sven_rouvinez"/>
@@ -535,14 +560,13 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="995b9a3d-c31d-4890-b909-d7335df6c293"/>
       <a name="integrity" val="7dd0b1b0ac22dcfd75563cf8a64cabd400a27afd"/>
     </comp>
-    <comp lib="0" loc="(270,210)" name="Pin">
-      <a name="facing" val="north"/>
-      <a name="label" val="JUMP"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="03.03.17 09:53:44"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="b59731a3-a41f-4798-a90a-d1483d7ba8e4"/>
-      <a name="integrity" val="9290511794987aa69669b8aae7d95e485ebb7097"/>
+    <comp lib="0" loc="(50,170)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x2"/>
+    </comp>
+    <comp lib="0" loc="(50,210)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x6"/>
     </comp>
     <comp lib="0" loc="(950,220)" name="Pin">
       <a name="facing" val="west"/>
@@ -556,10 +580,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="version" val="2.13.23.t"/>
       <a name="uuid" val="de516323-9d95-486a-b0a3-22e4ae6bc472"/>
       <a name="integrity" val="937fbf02aae09eda2f6fbab7d056fbce3ba0f782"/>
-    </comp>
-    <comp lib="0" loc="(150,170)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x2"/>
     </comp>
     <comp lib="2" loc="(290,170)" name="Multiplexer">
       <a name="width" val="16"/>
