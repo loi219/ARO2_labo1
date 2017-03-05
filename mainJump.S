@@ -13,15 +13,14 @@
 @
 @----------------------------------------------------------
 
-LOOP :
+ADR_SAUT_2 :
    mov r1,#3
    add r3,r1,r2
 
-   B LOOP
-
+   B ADR_SAUT_1
 .org 0x30
-INTER :
+ADR_SAUT_1 :
    add r4,r1,r3
    mov r5,#2
-   
-   mov r4,r5
+
+   B ADR_SAUT_2

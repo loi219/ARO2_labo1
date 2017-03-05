@@ -14,13 +14,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
 
 Disassembly of section .text:
 
-00000000 <ADR_SAUT_2>:
+00000000 <LOOP>:
    0:	2103      	movs	r1, #3
    2:	188b      	adds	r3, r1, r2
-   4:	e014      	b.n	30 <ADR_SAUT_1>
+   4:	e7fc      	b.n	0 <LOOP>
 	...
 
-00000030 <ADR_SAUT_1>:
+00000030 <INTER>:
   30:	18cc      	adds	r4, r1, r3
   32:	2502      	movs	r5, #2
-  34:	e7e4      	b.n	0 <ADR_SAUT_2>
+  34:	1c2c      	adds	r4, r5, #0
