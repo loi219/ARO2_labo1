@@ -21,6 +21,6 @@ Disassembly of section .text:
 	...
 
 00000030 <INTER>:
-  30:	18cc      	adds	r4, r1, r3
-  32:	2502      	movs	r5, #2
+  30:	18d1      	adds	r1, r2, r3
+  32:	2302      	movs	r3, #2
   34:	1c2c      	adds	r4, r5, #0

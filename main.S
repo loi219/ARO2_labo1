@@ -21,7 +21,7 @@ LOOP :
 
 .org 0x30
 INTER :
-   add r4,r1,r3
-   mov r5,#2
+   add r1,r2,r3
+   mov r3,#2
    
    mov r4,r5
