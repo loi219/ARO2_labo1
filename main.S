@@ -17,11 +17,11 @@ LOOP :
    mov r1,#3
    add r3,r1,r2
 
-   B LOOP
+   b LOOP
 
 .org 0x30
 INTER :
    add r1,r2,r3
    mov r3,#2
-   
+   b LOOP
    mov r4,r5
