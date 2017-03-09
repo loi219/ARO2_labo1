@@ -23,5 +23,4 @@ LOOP :
 INTER :
    add r1,r2,r3
    mov r3,#2
-   b LOOP
    mov r4,r5
