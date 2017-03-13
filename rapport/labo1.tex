@@ -30,7 +30,7 @@
 %utilisation de la couleur définie avant
 %toutes les sections auront cette couleur
 \sectionfont{\color{havelockBlue}}
-\subsectionfont{\color{havelockBlue}}
+%\subsectionfont{\color{havelockBlue}}
 %début du document
 \begin{document}
 
@@ -66,10 +66,20 @@
 \section{Objectifs du laboratoire}
 \section{Blocs Logisim}
 \subsection{Bloc MOV\_INST}
+\begin{figure}[H]
+\centering
+\includegraphics[width=.8\textwidth]{src/MOV_INST.png}
+
+Ce bloc permet de détecter si une instruction MOV est active. Cette instruction se caractérisque par une code 0x70
+\end{figure}
+
+
+
 \subsection{Bloc CALC\_ADR}
 \subsection{Bloc BRANCH\_INST}
 \subsection{Bloc FETCH\_16BITS}
 \subsection{Bloc FETCH\_JUMP\_16BITS}
+\subsection{Bloc FETCH\_INTER\_16BITS}
 \section{Fonctionnement global}
 \section{Conclusion}
 \section{Annexes}
