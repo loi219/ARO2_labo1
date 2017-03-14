@@ -17,7 +17,9 @@ Disassembly of section .text:
 00000000 <LOOP>:
    0:	2103      	movs	r1, #3
    2:	188b      	adds	r3, r1, r2
-   4:	e7fc      	b.n	0 <LOOP>
+   4:	189c      	adds	r4, r3, r2
+   6:	3404      	adds	r4, #4
+   8:	e7fa      	b.n	0 <LOOP>
 	...
 
 00000030 <INTER>:

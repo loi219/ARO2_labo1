@@ -18,6 +18,8 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{tabularx}
+\usepackage{multirow}% http://ctan.org/pkg/multirow
 \usepackage{tikz}
 \usepackage[top=15mm,bottom=20mm,right=50mm,left=50mm]{geometry} 
 \usepackage[export]{adjustbox}
@@ -33,6 +35,11 @@
 %\subsectionfont{\color{havelockBlue}}
 %début du document
 \begin{document}
+
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\cdot$}
+\renewcommand{\labelitemiii}{$\diamond$}
+\renewcommand{\labelitemiv}{$\ast$}
 
 %début d'un titre
 \begin{titlepage}
@@ -64,22 +71,91 @@
 \end{titlepage}
 
 \section{Objectifs du laboratoire}
-\section{Blocs Logisim}
-\subsection{Bloc MOV\_INST}
-\begin{figure}[H]
-\centering
-\includegraphics[width=.8\textwidth]{src/MOV_INST.png}
+La réalisation simplifiée de la partie FETCH d'un processeur RISC\footnote{Reduced Instruction Set Computing} avec l'incrémenation du PC\footnote{Program Counter} et la lecture d'instruction ainsi qu'un mécanisme de saut et un système de gestion d'interruption.
 
-Ce bloc permet de détecter si une instruction MOV est active. Cette instruction se caractérisque par une code 0x70
+\section{Blocs Logisim}
+Nous avons décidé de séparer les blocs afin de permettre une meilleure modularité et abstraction du système FETCH.\\
+\paragraph{Résumé}
+\begin{itemize}
+    \item     MOV\_INST détecte une instruction \textbf{MOV}
+    \item     BRANCH\_INST détecte une instruction \textbf{B}
+    \item     CALC\_ADR calcule le décalage lors d'une instruction \textbf{B}
+    \item     FETCH\_16BITS circuit avec incrémentation du PC et lecture d'instructions
+    \item     FETCH\_JUMP\_16BITS circuit avec mécanisme de saut
+    \item     FETCH\_INTER\_16BITS (main) circuit avec mécanisme d'interruption
+\end{itemize}
+\subsection{MOV\_INST}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/MOV_INST.png}
+    \caption{Instruction MOV}
+    \label{mov}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     INST: code complet
+    \item     0x70: code recherché
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     Rd: registre destination
+    \item     Rn: registre source
+    \item     OP: s'active si les bits de 15 à 9 sont égal à $0001110$ (0x70)
+\end{itemize}
+
+\medskip
+
+Ce bloc permet de détecter si une instruction \textbf{MOV} est trouvée dans le code de sortie de la ROM, cette instruction va charger le valeur du registre source (Rn) dans le registre destination (Rd).\\
+Elle se caractérisque par le code ci-dessous : 
+\\
+    \begin{tabular}{|ccccccc|ccc|ccc|ccc|}
+    \hline
+    \multicolumn{7}{|c|}{Code ARM}  & \multicolumn{3}{|c|}{Opcode} & \multicolumn{3}{|c|}{Rn} & \multicolumn{3}{|c|}{Rd}\\
+    \hline
+    15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6                    & 5 & 4 & 3                & 2 & 1 & 0 \\
+    \hline
+    0  & 0  & 0  & 1  & 1  & 1  & 0 & 0 & 0 & 0                    & 1 & 0 & 0                & 1 & 0 & 1 \\
+    \hline     
+    \end{tabular}
+\\
+\begin{itemize}
+    \item     Code ARM : instruction ARM à effectuer
+    \item     Opcode : instruction à effectuer par l'ALU
+    \item     Rn : registre source
+    \item     Rd : registre destination
+\end{itemize}
+
+
+\subsection{BRANCH\_INST}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/BRANCH_INST.png}
+    \caption{Instruction BRANCH}
+    \label{branch}
 \end{figure}
 
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     INST: code complet
+    \item     0x1c: code recherché
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     INST\_OUT: 
+    \item     Rn: registre source
+    \item     OP: s'active si les bits de 15 à 11 sont égal à $00011$ (0x70)
+\end{itemize}
+
+\medskip
 
 
-\subsection{Bloc CALC\_ADR}
-\subsection{Bloc BRANCH\_INST}
-\subsection{Bloc FETCH\_16BITS}
-\subsection{Bloc FETCH\_JUMP\_16BITS}
-\subsection{Bloc FETCH\_INTER\_16BITS}
+\subsection{CALC\_ADR}
+\subsection{FETCH\_16BITS}
+\subsection{FETCH\_JUMP\_16BITS}
+\subsection{FETCH\_INTER\_16BITS}
 \section{Fonctionnement global}
 \section{Conclusion}
 \section{Annexes}
