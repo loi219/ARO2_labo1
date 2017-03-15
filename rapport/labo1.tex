@@ -107,10 +107,10 @@ Nous avons décidé de séparer les blocs afin de permettre une meilleure modula
 
 \medskip
 
-Ce bloc permet de détecter si une instruction \textbf{MOV} est trouvée dans le code de sortie de la ROM, cette instruction va charger le valeur du registre source (Rn) dans le registre destination (Rd).\\
+Ce bloc permet de détecter si une instruction \textbf{MOV} est trouvée, grâce au comparateur, dans le code de sortie de la ROM, cette instruction va charger le valeur du registre source (Rn) dans le registre destination (Rd).\\
 Elle se caractérisque par le code ci-dessous : 
 \\
-    \begin{tabular}{|ccccccc|ccc|ccc|ccc|}
+\begin{tabular}{|ccccccc|ccc|ccc|ccc|}
     \hline
     \multicolumn{7}{|c|}{Code ARM}  & \multicolumn{3}{|c|}{Opcode} & \multicolumn{3}{|c|}{Rn} & \multicolumn{3}{|c|}{Rd}\\
     \hline
@@ -144,15 +144,47 @@ Elle se caractérisque par le code ci-dessous :
 
 \paragraph{Définition des sorties:}
 \begin{itemize}
-    \item     INST\_OUT: 
+    \item     INST\_OUT: contient l'adresse de retour
     \item     Rn: registre source
     \item     OP: s'active si les bits de 15 à 11 sont égal à $00011$ (0x70)
 \end{itemize}
 
 \medskip
+Grâce à ce bloc, le système sera capable d'effectuer un saut inconditionnel. Pour calculer l'adresse de retour, il faut effectuer une opération: $PC + Adresse*2 + 4$ (voir \ref{bl_calc_adr}).\\
+
+\begin{tabular}{|ccccc|ccccccccccc|}
+    \hline
+    \multicolumn{5}{|c|}{Code ARM}  & \multicolumn{11}{|c|}{Offset}\\
+    \hline
+    15 & 14 & 13 & 12 & 11          & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+    \hline
+    1  & 1  & 1  & 0  & 0           & 1  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+    \hline     
+    \end{tabular}
+    \\
+\begin{itemize}
+    \item     Code ARM : instruction ARM à effectuer
+    \item     Offset: adresse relative par rapport au PC
+\end{itemize}
 
 
-\subsection{CALC\_ADR}
+\paragraph{Exemple:} dans notre cas, nous avons \textit{B ADR\_SAUT\_1} dans notre fichier d'instructions ce qui équivaut à 0xe7fc. Donc si nous prenons le tableau du haut et que nous faisons la conversion en binaire:
+\\
+\begin{tabular}{|ccccc|ccccccccccc|}
+    \hline
+    \multicolumn{5}{|c|}{Code ARM}  & \multicolumn{11}{|c|}{Offset}\\
+    \hline
+    15 & 14 & 13 & 12 & 11          & 10 & 9 & 8 & 7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+    \hline
+    1  & 1  & 1  & 0  & 0           & 1  & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 0 & 0\\
+    \hline     
+    \end{tabular}
+    
+    \medskip
+Seul les bits 10 à 0 nous intéresse c'est pourquoi il y a un bit extender de 11 bits $\rightarrow$ 16 bits pour travailler sur la même base.\\
+Ensuite nous effectuons le calcul avec un PC à $4$ et un INST\_OUT de 0xfffc: $4 + 1111111111111100 * 2 + 4=0000$ donc l'adresse de retour sera $0000$
+
+\subsection{CALC\_ADR} \label{bl_calc_adr}
 \subsection{FETCH\_16BITS}
 \subsection{FETCH\_JUMP\_16BITS}
 \subsection{FETCH\_INTER\_16BITS}
