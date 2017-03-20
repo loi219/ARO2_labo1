@@ -181,13 +181,67 @@ Grâce à ce bloc, le système sera capable d'effectuer un saut inconditionnel. 
     \end{tabular}
     
     \medskip
-Seul les bits 10 à 0 nous intéresse c'est pourquoi il y a un bit extender de 11 bits $\rightarrow$ 16 bits pour travailler sur la même base.\\
-Ensuite nous effectuons le calcul avec un PC à $4$ et un INST\_OUT de 0xfffc: $4 + 1111111111111100 * 2 + 4=0000$ donc l'adresse de retour sera $0000$
+Seul les bits 10 à 0 nous intéressent, c'est pourquoi il y a un bit extender de 11 bits $\rightarrow$ 16 bits pour travailler sur la même base.\\
+Ensuite, nous effectuons le calcul avec un PC à $4$ et un INST\_OUT de 0xfffc: $4 + 1111111111111100 * 2 + 4=0000$ donc l'adresse de retour sera $0000$
 
 \subsection{CALC\_ADR} \label{bl_calc_adr}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/CALC_ADR.png}
+    \caption{Calcul du décalage}
+    \label{bl_calc_adr}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     PC: program counter
+    \item     ADR: adresse à décaler
+    \item     0x0002: multiplication par 2
+    \item     0x0004: addition de 4
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item ADR\_OUT: contient l'adresse de retour
+    \item COMPUTE: déclenche l'opération
+\end{itemize}
+\medskip
+Dans ce bloc, l'adresse fournie va subir 3 opérations. Elle va être multipliée par 2, puis addionnée au PC, puis additionnée à 4. Un multliplexer va permettre d'enclencher la suite d'opération, lorsque le bit COMPUTE sera à 1.
+
 \subsection{FETCH\_16BITS}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/FETCH.png}
+    \caption{Fetch 16 bits}
+    \label{fetch_16bits}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     PC: program counter
+    \item     clk: horloge
+    \item     CLR: reset
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item FETCH\_OUT: adresse en sortie
+    \item     PC\_IN: adresse en sortie du splitter
+\end{itemize}
+\medskip
+Ce circuit permet de parcourir les adresses en mémoire. On a un register 16 bits qui parcourt les adresses. Comme on veut ignorer la première adresse (0), un splitter à la sortie du registre va prendre 15 bits uniquement, et le bit de poids faible ne va pas être retenu. Mais puisqu'on veut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse on divise l'adresse par deux, on ajoute un additionneur +2 au début du regiter. Cela va permettre de doubler l'adresse, et ainsi, en supprimant de bit de poids faible, on obtient l'adresse attendue. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
 \subsection{FETCH\_JUMP\_16BITS}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/FETCH_JUMP.png}
+    \caption{Mécanisme de saut}
+    \label{fetch_jump}
+\end{figure}
 \subsection{FETCH\_INTER\_16BITS}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/FETCH_INTER.png}
+    \caption{Mécanisme d'interruption}
+    \label{fetch_inter}
+\end{figure}
 \section{Fonctionnement global}
 \section{Conclusion}
 \section{Annexes}
