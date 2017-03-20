@@ -223,7 +223,7 @@ Dans ce bloc, l'adresse fournie va subir 3 opérations. Elle va être multiplié
 
 \paragraph{Définition des sorties:}
 \begin{itemize}
-    \item FETCH\_OUT: adresse en sortie
+    \item FETCH\_OUT: instruction en sortie
     \item     PC\_IN: adresse en sortie du splitter
 \end{itemize}
 \medskip
@@ -235,6 +235,7 @@ Ce circuit permet de parcourir les adresses en mémoire. On a un register 16 bit
     \caption{Mécanisme de saut}
     \label{fetch_jump}
 \end{figure}
+Dans ce circuit, le saut a été choisi à l'adresse 0x0018, ce qui correspond à l'instruction 18cc.
 \subsection{FETCH\_INTER\_16BITS}
 \begin{figure}[H]
     \centering
