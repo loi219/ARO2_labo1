@@ -15,9 +15,9 @@ Idx Name          Size      VMA       LMA       File off  Algn
 Disassembly of section .text:
 
 00000000 <.text>:
-   0:	201b      	movs	r0, #27
-   2:	2204      	movs	r2, #4
-   4:	2343      	movs	r3, #67	; 0x43
-   6:	1c19      	adds	r1, r3, #0
-   8:	1c10      	adds	r0, r2, #0
-   a:	21ac      	movs	r1, #172	; 0xac
+   0:	2102      	movs	r1, #2
+   2:	2319      	movs	r3, #25
+   4:	18d1      	adds	r1, r2, r3
+   6:	210c      	movs	r1, #12
+   8:	1888      	adds	r0, r1, r2
+   a:	1c03      	adds	r3, r0, #0
