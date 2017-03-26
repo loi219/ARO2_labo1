@@ -205,9 +205,9 @@ Ensuite, nous effectuons le calcul avec un PC à $4$ et un INST\_OUT de 0xfffc: 
     \item COMPUTE: déclenche l'opération
 \end{itemize}
 \medskip
-Dans ce bloc, l'adresse fournie va subir 3 opérations. Elle va être multipliée par 2 (offset), puis addionnée au PC, puis additionnée à 4. Un multliplexer va permettre d'enclencher la suite d'opération, lorsque le bit COMPUTE sera à 1.
+Dans ce bloc, l'adresse fournie va subir 3 opérations. Elle va être multipliée par 2 (offset), addionnée au PC, puis additionnée à 4. L'entrée \textbf{COMPUTE} permet de passer outre ce calcul si l'instruction venait à être différente à un MOV
 \\
-Si, par exemple, on a en entrée \textbf{ADR} 0xfffc, et en entrée \text{PC} 0x0004 (cas que nous rencontrons plus tard dans ce labo) en multipliant par 2 on obtient 0x1FFF8, puis en ajoutant l'entrée PC à 0x0004 on obient 0x1FFFC, et, pour finir, en ajoutant 4, on obtient 0x20000. Ainsi, puisque la sortie est sur 4 bits, on obtient 0x0000 en \text{ADR\_OUT}. On sait donc que l'adresse après saut est 0x0000.
+Si, par exemple, on a en entrée \textbf{ADR} 0xfffc, et le \text{PC} 0x0004 (cas que nous rencontrons plus tard dans ce labo) en multipliant par 2 on obtient 0x1FFF8, puis en ajoutant l'entrée PC à 0x0004 on obient 0x1FFFC, et, pour finir, en ajoutant 4, on obtient 0x20000. Ainsi, puisque la sortie est sur 4 bits, on obtient 0x0000 en \textbf{ADR\_OUT}. On sait donc que l'adresse après saut est 0x0000.
 
 \subsection{FETCH\_16BITS}
 \begin{figure}[H]
