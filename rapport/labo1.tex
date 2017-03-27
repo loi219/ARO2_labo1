@@ -181,14 +181,14 @@ Grâce à ce bloc, le système sera capable d'effectuer un saut inconditionnel. 
     \end{tabular}
     
     \medskip
-Seul les bits 10 à 0 nous intéressent, c'est pourquoi il y a un bit extender de 11 bits $\rightarrow$ 16 bits pour travailler sur la même base.\\
+Seul les bits 10 à 0 nous intéressent pour le calcul, c'est pourquoi il y a un bit extender de 11 bits $\rightarrow$ 16 bits pour travailler sur la même base.\\
 Ensuite, nous effectuons le calcul avec un PC à $4$ et un INST\_OUT de 0xfffc: $4 + 1111111111111100 * 2 + 4=0000$ donc l'adresse de retour sera $0000$
 
 \subsection{CALC\_ADR} \label{bl_calc_adr}
 \begin{figure}[H]
     \centering
     \includegraphics[width=.8\textwidth]{src/CALC_ADR.png}
-    \caption{Calcul du décalage}
+    \caption{Calcul du saut}
     \label{bl_calc_adr}
 \end{figure}
 \paragraph{Définition des entrées:}
@@ -201,13 +201,14 @@ Ensuite, nous effectuons le calcul avec un PC à $4$ et un INST\_OUT de 0xfffc: 
 
 \paragraph{Définition des sorties:}
 \begin{itemize}
-    \item ADR\_OUT: contient l'adresse de retour
-    \item COMPUTE: déclenche l'opération
+    \item ADR\_OUT: contient l'adresse du saut
+    \item COMPUTE: si à $1$ le calcul de l'adresse du saut ne sera pas effectué
 \end{itemize}
 \medskip
-Dans ce bloc, l'adresse fournie va subir 3 opérations. Elle va être multipliée par 2 (offset), addionnée au PC, puis additionnée à 4. L'entrée \textbf{COMPUTE} permet de passer outre ce calcul si l'instruction venait à être différente à un MOV
+Dans ce bloc, l'adresse fournie va subir 3 opérations. Elle va être multipliée par 2 (offset), addionnée au PC, puis additionnée à 4.\\
+L'entrée \textbf{COMPUTE} permet de passer outre ce calcul si l'instruction venait à être différente à un MOV.
 \\
-Si, par exemple, on a en entrée \textbf{ADR} 0xfffc, et le \text{PC} 0x0004 (cas que nous rencontrons plus tard dans ce labo) en multipliant par 2 on obtient 0x1FFF8, puis en ajoutant l'entrée PC à 0x0004 on obient 0x1FFFC, et, pour finir, en ajoutant 4, on obtient 0x20000. Ainsi, puisque la sortie est sur 4 bits, on obtient 0x0000 en \textbf{ADR\_OUT}. On sait donc que l'adresse après saut est 0x0000.
+Si, par exemple, l'entrée \textbf{ADR} 0xfffc, et le \textbf{PC} 0x0004 (cas que nous rencontrons plus tard dans ce labo) en multipliant par 2 on obtient 0xfff8, puis en ajoutant l'entrée PC à 0x0004 on obient 0xfffc, et, pour finir, en ajoutant 4, on obtient 0x20000. Ainsi, puisque la sortie est sur 4 bits, on obtient 0x0000 en \textbf{ADR\_OUT}. On sait donc que l'adresse après saut est 0x0000.
 
 \subsection{FETCH\_16BITS}
 \begin{figure}[H]
@@ -229,7 +230,8 @@ Si, par exemple, on a en entrée \textbf{ADR} 0xfffc, et le \text{PC} 0x0004 (ca
     \item     PC\_IN: adresse en sortie du splitter
 \end{itemize}
 \medskip
-Ce circuit permet de parcourir les adresses en mémoire. On a un register 16 bits qui parcourt les adresses. Comme on veut ignorer la première adresse (0), un splitter à la sortie du registre va prendre 15 bits uniquement, et le bit de poids faible ne va pas être retenu. Mais puisqu'on veut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse on divise l'adresse par deux, on ajoute un additionneur +2 au début du regiter. Cela va permettre de doubler l'adresse, et ainsi, en supprimant de bit de poids faible, on obtient l'adresse attendue. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
+Ce circuit permet de parcourir les adresses en mémoire. \\
+Il y a un register 16 bits qui parcourt les adresses. Pour ignorer le premier bit (0), un splitter à la sortie du registre va prendre 15 bits uniquement (1..15), et le bit de poids faible ne va pas être retenu. Mais puisqu'il faut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse elle est divisée par deux, on ajoute un additionneur +2 au début du register. Cela va permettre de doubler l'adresse, et ainsi, en supprimant de bit de poids faible, on obtient l'adresse attendue. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
 \subsection{FETCH\_JUMP\_16BITS}
 \begin{figure}[H]
     \centering
@@ -237,10 +239,15 @@ Ce circuit permet de parcourir les adresses en mémoire. On a un register 16 bit
     \caption{Mécanisme de saut}
     \label{fetch_jump}
 \end{figure}
-Le registre PC contient l'adresse actuelle. Un multiplexer placé avant va être à zéro tant que l'instruction 0xe7fc n'est pas rencontrée. Si elle est rencontrée, alors le bloc BRANCH\_INST (voir \ref{branchinst}) va renvoyer un 1 à sa sortie op, car les bits 15 à 11 de l'instruction 0xe7fc correspondent à 0x1c (instruction de saut), qui est précisément ce qui est recherché dans le bloc BRANCH\_INST. Ainsi, comme il renvoie un 1, c'est maintenant la sortie du bloc CALC\_ADR qui va être prise en compte par le multiplexers mentionné plus haut. Ce bloc CALC\_ADR prend en entrée \textbf{ADR} la sortie \textbf{INST\_OUT} du bloc BRANCH\_OUT, qui se trouve être, en héxadécimal, les bits 10 à 0 de l'instruction 0xe7fc, qui correspondent à 0xfffc, et entrée \textbf{PC} 0x0004. Dans le bloc CALC\_ADR, 0xfffc subit la suite d'opérations mentionnées dans la description de ce bloc (voir \ref{bl_calc_adr}), pour calculer l'adresse de saut, et on aura donc en sortie 0x0000. Donc, à chaque fois qu'on va atteindre l'instruction 0xe7fc, on va sauter à l'adresse 0x0000.
+Le registre PC contient l'adresse actuelle. Un multiplexer placé avant va être à zéro tant que l'instruction 0xe7fc n'est pas rencontrée. Si elle est rencontrée, alors le bloc BRANCH\_INST (voir \ref{branchinst}) va renvoyer 1 à sa sortie \textbf{OP}, car les bits 15 à 11 de l'instruction 0xe7fc correspondent à 0x1c (instruction de saut), qui est précisément ce qui est recherché dans le bloc BRANCH\_INST. Ainsi, comme il renvoie un 1, c'est maintenant la sortie du bloc CALC\_ADR qui va être prise en compte par le multiplexers mentionné plus haut. \\
+Ce bloc CALC\_ADR prend en entrée \textbf{ADR} la sortie \textbf{INST\_OUT} du bloc BRANCH\_OUT, qui se trouve être, en héxadécimal, les bits 10 à 0 de l'instruction 0xe7fc, qui correspondent à 0xfffc, et entrée \textbf{PC} 0x0004. Dans le bloc CALC\_ADR, 0xfffc subit la suite d'opérations mentionnées dans la description de ce bloc (voir \ref{bl_calc_adr}), pour calculer l'adresse de saut, et donc la sortie sera 0x0000. Donc, à chaque fois qu'on va atteindre l'instruction 0xe7fc, on va sauter à l'adresse 0x0000.
 \\
-Dans ce circuit, on veut aussi pouvoir effectuer un saut à l'adresse 0x0018, en enclenchant un bouton \textbf{JUMP}. Pour ce faire, un multiplexer a été ajouté pour choisir entre l'adresse du PC (toujours additionnée à 2, pour permettre une adresse correcte lors du retrait du bit de poids faible comme expliqué dans le bloc FETCH\_16BITS), ou l'adresse 0x0030. Ainsi, lorsqu'on fait passer le multiplexer à 1 (grâce au pin \text{JUMP}, c'est l'adresse 0x0030 qui va être utilisée. Comme on retire toujours le bit de poids faible, cette adresse se retrouve divisée par 2 et on obtient bien 0x0018.
+Dans ce circuit, il faut pouvoir effectuer un saut à l'adresse 0x0018, en enclenchant un bouton \textbf{JUMP}. 
+\\Pour ce faire, un multiplexer a été ajouté pour choisir entre l'adresse du PC (toujours additionnée à 2, pour permettre une adresse correcte lors du retrait du bit de poids faible (comme expliqué dans le bloc FETCH\_16BITS), ou l'adresse 0x0030. Ainsi, lorsqu'on fait passer le multiplexer à 1 (grâce au pin \textbf{JUMP}, c'est l'adresse 0x0030 qui va être utilisée. Comme on retire toujours le bit de poids faible, cette adresse se retrouve divisée par 2 et on obtient bien 0x0018.
+\pagebreak
+
 \subsection{FETCH\_INTER\_16BITS}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{src/FETCH_INTER.png}
@@ -264,17 +271,18 @@ Dans ce circuit, on veut aussi pouvoir effectuer un saut à l'adresse 0x0018, en
 \medskip
 Ce bloc regroupe tous les blocs précédent, et permet de simuler une interruption. Les conditions de ce blocs étaient les suivantes:
 \begin{itemize}
-   \item Quand on presse le bouton INTER, la valeur de PC est chargée dans LR
+   \item Quand on presse le bouton INTER, la valeur suivante du PC est chargée dans LR\footnote{Link Register}
    \item À ce moment, le PC est chargé avec l'adresse 0x30
-   \item L'intruction 1c2c doit être détectée et mov r4, r5 doit être effectuée
+   \item L'intruction 1c2c doit être détectée et la valeur du registre 5 (LR) doit être chargée dans le 4 (PC) (MOV r4, r5)
 \end{itemize}
 \medskip
-Une grande partie de ce circuit fonctionne comme le précédent, à savoir: un MUX permet de choisir entre l'adresse à laquelle est additionnée 2 à chaque coup d'horloge, ou l'adresse 0x30, qu'on veut atteindre lorsque l'on presse le bouton \textbf{INTER}. On a ensuite ensuite un registre 16 bits, dont on ignore le dernier bit en sortie. Grâce au +2 en amont, l'adresse est correcte lorsqu'elle est transmise à la mémoire. On peut facilement le vérifier grâce à la sortie \textbf{PC\_IN}. Ensuite, nous retrouvons inévitablement la mémoire, dont l'instruction de sortie est déterminée par l'adresse \textbf{PC\_IN} en entrée de celle-ci.\medskip \\
+Une grande partie de ce circuit fonctionne comme le précédent, à savoir: un MUX permet de choisir entre l'adresse à laquelle est additionnée 2 à chaque coup d'horloge, ou l'adresse 0x30, qu'on veut atteindre lorsque l'on presse le bouton \textbf{INTER}. On a ensuite ensuite un registre 16 bits, dont on ignore le dernier bit en sortie. Grâce au +2 en amont, l'adresse est correcte lorsqu'elle est transmise à la mémoire. On peut facilement le vérifier grâce à la sortie \textbf{PC\_IN}. Ensuite, nous retrouvons inévitablement la mémoire, dont l'instruction de sortie est déterminée par l'adresse \textbf{PC\_IN} en entrée de celle-ci.\medskip
 
-La partie suivante diffère légèrement. On retrouve d'abord le bloc \text{BRANCH\_INST} qui permet de détecter les inctructions de saut. Ainsi, lorsque l'on atteint l'instruction 0xe7fa en mémoire (à l'adresse 0x0004), les bits 15 à 11 de l'instruction équivalent à 0b11100. Additionné à 0x1c dans \textbf{BRANCH\_INST}, on a bien un bit d'oevrflow et donc l'instruction JUMP va être délenchée. En sortie op, on aura, comme expliqué dans le bloc \textbf{BRANCH\_INST} (voir ref \ref{branchinst}), les bits 10-0 de 0xe7fa, donc 0xfffa. Ces bits sont en entrée dans le bloc \textbf{CALC\_ADR}, qui va, comme expliqué précédemment, effectuer les diverses opérations qui permettent de caculer l'adresse de saut. Cette adresse sera égale à 0x0000, ainsi à chaque fois que l'instruction 0xe7fa est effectuée, on retrourne à l'adresse 0x0000 de la mémoire.\\
-L'interupteur \textbf{INTER}, lorsqu'il est pressé, permet de choisir l'adresse 0x30 et donc de faire un saut à l'adresse 0x30 dans la mémoire. L'INTER est aussi relié au registre LR. Ainsi, lorsque INTER est activé, l'adresse PC est chargée dans le LR, juste avant qu'il passe à 0x30.\medskip \\
+La partie suivante diffère légèrement. On retrouve d'abord le bloc \text{BRANCH\_INST} qui permet de détecter les inctructions de saut. Ainsi, lorsque l'on atteint l'instruction 0xe7fa en mémoire (à l'adresse 0x0004), les bits 15 à 11 de l'instruction équivalent à 0b11100. Additionné à 0x1c dans \textbf{BRANCH\_INST}, on a bien un bit d'overflow et donc l'instruction de saut va être délenchée. En sortie \textbf{OP}, on aura, comme expliqué dans le bloc \textbf{BRANCH\_INST} (voir \ref{branchinst}), les bits 10-0 de 0xe7fa, donc 0xfffa. Ces bits sont en entrée dans le bloc \textbf{CALC\_ADR}, qui va, comme expliqué précédemment, effectuer les diverses opérations qui permettent de caculer l'adresse de saut. Cette adresse sera égale à 0x0000, ainsi à chaque fois que l'instruction 0xe7fa est effectuée, on retrourne à l'adresse 0x0000 de la mémoire.\\
+L'interrupteur \textbf{INTER}, lorsqu'il est pressé, permet de choisir l'adresse 0x30 et donc de faire un saut à l'adresse 0x30 dans la mémoire. L'INTER est aussi relié au registre LR. Ainsi, lorsque INTER est activé, l'adresse suivante du PC est chargée dans le LR, juste avant qu'il passe à 0x30.\medskip \\
 
-Le bloc \textbf{MOV\_INST} permet de détecter l'instruction MOV. Il va détecter si les bits 15 à 6 sont égal à 0x70 (MOV). Ici, l'instruction à détecter est 0x1c2c. Les biits 15-6 de cette instruction sont 0b0001110000, ce qui correspond bien à 0x70. Ainsi, l'instruction MOV va être activée. Le registre source (ici r5) correspond aux bits 5-3 et le registre destination (ici r4) correspond aux bits 2-0. On peut voir sur la figure ci-dessous la détection de l'instruction MOV, et les registres source et destination en sortie de \textbf{MOV\_INST}
+Le bloc \textbf{MOV\_INST} permet de détecter l'instruction MOV. Il va détecter si les bits 15 à 6 sont égal à 0x70 (MOV). Ici, l'instruction à détecter est 0x1c2c. Les bits 15-6 de cette instruction sont 0b0001110000, ce qui correspond bien à 0x70. 
+\\Ainsi, l'instruction MOV va être activée. Le registre source (ici r5) correspond aux bits 5-3 et le registre destination (ici r4) correspond aux bits 2-0. On peut voir sur la figure ci-dessous la détection de l'instruction MOV, et les registres source et destination en sortie de \textbf{MOV\_INST}
 
 \begin{figure}[H]
     \centering
@@ -285,7 +293,7 @@ Le bloc \textbf{MOV\_INST} permet de détecter l'instruction MOV. Il va détecte
 
 \section{Conclusion}
 Dans ce laboratoire, nous avons pu mettre en pratique la théorie vue en classe, qui peut parfois être un peu floue jusqu'à avoir un exemple concret. Nous avons appris à manipuler des adresses de mémoire et des instructions, compris le fonctionnement de ces dernières et la façon dont elles étaient segmentées, chaque portion de bits contenant une information qui permet d'effectuer les bonnes opérations aux bons endroits. \\
-Nous avons remarqué que la séparation des gros circuits en plus petits circuits permettait une bien meilleure lisibilité, ainsi nous avons séparé l'entier du circuit.
+L'utilisation de blocs permet d'ajouter une couche d'abstraction et donc de modularité lorsque la connexion de différents circuits (comme dans le main) est nécessaire.
 \section{Annexes}
 
 \end{document}
