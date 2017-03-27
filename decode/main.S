@@ -15,7 +15,7 @@
 
 MOV r1, #2
 MOV r3, #25
-ADD r1, r2, r3
+ADD r2, r1, r3
 MOV r1, #12
 ADD r0, r1, r2
 MOV r3, r0
