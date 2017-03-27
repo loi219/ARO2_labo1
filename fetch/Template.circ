@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project integrity="806f1cc6eed4b3e3a3d75ef31fe2a52ed8cb90c3" source="2.13.24.t" version="1.0">
+<project integrity="c76fa4fc1e8163f8e9f692128d280f96451973e8" source="2.13.24.t" version="1.0">
 This file is intended to be loaded by Logisim-evolution (https://github.com/reds-heig/logisim-evolution).
 <lib desc="#Wiring" name="0">
     <tool name="Splitter">
@@ -253,7 +253,72 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(1300,450)" to="(1300,490)"/>
     <wire from="(1250,480)" to="(1250,520)"/>
     <wire from="(600,300)" to="(600,670)"/>
-    <comp lib="0" loc="(430,320)" name="Constant"/>
+    <comp lib="0" loc="(1210,300)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="16"/>
+      <a name="label" val="FETCH_OUT"/>
+      <a name="labelloc" val="east"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:02:59"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="3027ed5d-5d12-4e73-bf61-f4433f2400e8"/>
+      <a name="integrity" val="137c438e5d3e0f0bd70a80173b295b8d8b64dded"/>
+    </comp>
+    <comp lib="4" loc="(710,280)" name="ROM">
+      <a name="addrWidth" val="15"/>
+      <a name="dataWidth" val="16"/>
+      <a name="contents">addr/data: 15 16
+2103 188b 189c 3404 e7fa 19*0 18d1 2104
+2302 1c2c
+</a>
+      <a name="label" val="MEM_INSTRU"/>
+    </comp>
+    <comp lib="0" loc="(50,270)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x2"/>
+    </comp>
+    <comp lib="0" loc="(290,60)" name="Clock">
+      <a name="label" val="sysclk"/>
+      <a name="owner" val="autogen:prodis"/>
+      <a name="date" val="18.02.15 14:33:55"/>
+      <a name="version" val="2.13.5"/>
+      <a name="uuid" val="9291d233-80c8-490c-a37d-fc14bc364185"/>
+      <a name="integrity" val="08e9fa442044370df5a5c40a7a3b4c6bf548daa0"/>
+    </comp>
+    <comp lib="5" loc="(120,830)" name="Button">
+      <a name="facing" val="north"/>
+      <a name="label" val="INTER"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="07.03.17 13:52:57"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="317bdd7c-6840-4cef-9a9d-18fec4e5da9f"/>
+      <a name="integrity" val="51b10ba51faa1728b8f6b323edc1e25e55fe43fd"/>
+    </comp>
+    <comp lib="0" loc="(1150,540)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="3"/>
+      <a name="label" val="Rn"/>
+      <a name="labelloc" val="east"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:02:59"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="14ceeef0-62f2-4783-98b5-ab90a1a92386"/>
+      <a name="integrity" val="e3c801f71767cb527a9037d448a9a199be341b3c"/>
+    </comp>
+    <comp lib="0" loc="(290,40)" name="Clock">
+      <a name="highDuration" val="4"/>
+      <a name="lowDuration" val="4"/>
+      <a name="label" val="clk"/>
+      <a name="owner" val="autogen:prodis"/>
+      <a name="date" val="18.02.15 14:33:55"/>
+      <a name="version" val="2.13.5"/>
+      <a name="uuid" val="da278363-6f36-461c-b04d-b5d897877917"/>
+      <a name="integrity" val="9218dfb4c1b4b3aa53e118927a89e61dc95158ea"/>
+    </comp>
     <comp lib="0" loc="(50,380)" name="Pin">
       <a name="facing" val="south"/>
       <a name="label" val="CLR"/>
@@ -262,6 +327,15 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="version" val="2.13.23.t"/>
       <a name="uuid" val="6839b24c-8821-420b-ae99-d6b378f02f86"/>
       <a name="integrity" val="4e1f3895a6747b15c518374d94d3b740df114811"/>
+    </comp>
+    <comp lib="4" loc="(460,270)" name="Register">
+      <a name="width" val="16"/>
+      <a name="label" val="PC"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:37:23"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="dd8678bd-eb5d-456e-8303-ded9f6931802"/>
+      <a name="integrity" val="0d70179436bb303051876388e1ba8bc425dd4c7b"/>
     </comp>
     <comp lib="4" loc="(1120,590)" name="Register">
       <a name="width" val="16"/>
@@ -272,14 +346,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="92fe5ec1-0d70-4c0d-b415-d84f5ef9ef68"/>
       <a name="integrity" val="2ee0813d66668bbb0681edc5e08129e9c10b0e92"/>
     </comp>
-    <comp lib="3" loc="(1270,580)" name="Adder">
-      <a name="width" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:38:18"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="ca43f49d-001c-44d1-a1bd-9d9e3a739cee"/>
-      <a name="integrity" val="ffd0c82ed71c3815850716478ce63c4b62ee9aea"/>
-    </comp>
     <comp lib="2" loc="(1330,350)" name="Multiplexer">
       <a name="width" val="16"/>
       <a name="enable" val="false"/>
@@ -289,18 +355,49 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="801c5a87-34c0-4c50-bf2d-a8156cc22ae3"/>
       <a name="integrity" val="e04d563bfb3f280f03d1811fcb965504125cc925"/>
     </comp>
-    <comp lib="0" loc="(320,370)" name="Probe">
+    <comp lib="0" loc="(1390,440)" name="Probe">
+      <a name="facing" val="west"/>
       <a name="radix" val="16"/>
     </comp>
-    <comp lib="0" loc="(290,60)" name="Clock">
-      <a name="label" val="sysclk"/>
-      <a name="owner" val="autogen:prodis"/>
-      <a name="date" val="18.02.15 14:33:55"/>
-      <a name="version" val="2.13.5"/>
-      <a name="uuid" val="9291d233-80c8-490c-a37d-fc14bc364185"/>
-      <a name="integrity" val="08e9fa442044370df5a5c40a7a3b4c6bf548daa0"/>
+    <comp lib="0" loc="(710,210)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="15"/>
+      <a name="label" val="PC_IN"/>
+      <a name="labelloc" val="east"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:02:59"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="0bb37a26-2ce9-40ab-bc7b-9481dc11fbd1"/>
+      <a name="integrity" val="c649ced587b2b93f06a838f3f8a3b63f8e129d64"/>
     </comp>
-    <comp lib="6" loc="(309,597)" name="Text"/>
+    <comp lib="0" loc="(1150,520)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="3"/>
+      <a name="label" val="Rd"/>
+      <a name="labelloc" val="east"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:02:59"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="d91e0f8f-a299-4b0f-bbb8-d91c3048f651"/>
+      <a name="integrity" val="a27c3178a2f90c3abb25f4edf6ece023caed8750"/>
+    </comp>
+    <comp lib="6" loc="(309,19)" name="Text">
+      <a name="text" val="Ne pas modifier les noms des clocks"/>
+    </comp>
+    <comp lib="0" loc="(430,320)" name="Constant"/>
+    <comp loc="(1150,520)" name="MOV_INST"/>
+    <comp lib="0" loc="(1070,660)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="label" val="clk"/>
+    </comp>
+    <comp lib="6" loc="(81,80)" name="Text">
+      <a name="text" val="Date : 25.02.2014"/>
+      <a name="font" val="SansSerif plain 13"/>
+    </comp>
     <comp loc="(330,490)" name="CALC_ADR"/>
     <comp lib="0" loc="(630,300)" name="Splitter">
       <a name="fanout" val="1"/>
@@ -327,84 +424,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="bit14" val="0"/>
       <a name="bit15" val="0"/>
     </comp>
-    <comp lib="0" loc="(1150,540)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="3"/>
-      <a name="label" val="Rn"/>
-      <a name="labelloc" val="east"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:02:59"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="14ceeef0-62f2-4783-98b5-ab90a1a92386"/>
-      <a name="integrity" val="e3c801f71767cb527a9037d448a9a199be341b3c"/>
-    </comp>
-    <comp lib="0" loc="(1210,300)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="16"/>
-      <a name="label" val="FETCH_OUT"/>
-      <a name="labelloc" val="east"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:02:59"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="3027ed5d-5d12-4e73-bf61-f4433f2400e8"/>
-      <a name="integrity" val="137c438e5d3e0f0bd70a80173b295b8d8b64dded"/>
-    </comp>
-    <comp lib="0" loc="(50,300)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x30"/>
-    </comp>
-    <comp lib="6" loc="(96,40)" name="Text">
-      <a name="text" val="LABO ARO 2 - FETCH"/>
-      <a name="font" val="SansSerif bold 13"/>
-    </comp>
-    <comp lib="3" loc="(110,260)" name="Adder">
-      <a name="width" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:38:18"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="f3d05c55-3217-4509-8cc0-b97c08518d77"/>
-      <a name="integrity" val="51ccfb57311e67581c10ef9a017b78d72c8c475a"/>
-    </comp>
-    <comp lib="6" loc="(309,19)" name="Text">
-      <a name="text" val="Ne pas modifier les noms des clocks"/>
-    </comp>
-    <comp lib="0" loc="(1390,440)" name="Probe">
-      <a name="facing" val="west"/>
-      <a name="radix" val="16"/>
-    </comp>
-    <comp lib="0" loc="(290,40)" name="Clock">
-      <a name="highDuration" val="4"/>
-      <a name="lowDuration" val="4"/>
-      <a name="label" val="clk"/>
-      <a name="owner" val="autogen:prodis"/>
-      <a name="date" val="18.02.15 14:33:55"/>
-      <a name="version" val="2.13.5"/>
-      <a name="uuid" val="da278363-6f36-461c-b04d-b5d897877917"/>
-      <a name="integrity" val="9218dfb4c1b4b3aa53e118927a89e61dc95158ea"/>
-    </comp>
-    <comp loc="(1150,520)" name="MOV_INST"/>
-    <comp lib="0" loc="(1220,570)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x2"/>
-    </comp>
-    <comp lib="4" loc="(710,280)" name="ROM">
-      <a name="addrWidth" val="15"/>
-      <a name="dataWidth" val="16"/>
-      <a name="contents">addr/data: 15 16
-2103 188b 189c 3404 e7fa 19*0 18d1 2104
-2302 1c2c
-</a>
-      <a name="label" val="MEM_INSTRU"/>
-    </comp>
-    <comp lib="6" loc="(239,266)" name="Text"/>
-    <comp lib="6" loc="(99,60)" name="Text">
-      <a name="text" val="HEIG-VD / Institut REDS"/>
-      <a name="font" val="SansSerif plain 13"/>
-    </comp>
     <comp lib="2" loc="(170,280)" name="Multiplexer">
       <a name="width" val="16"/>
       <a name="enable" val="false"/>
@@ -414,32 +433,45 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="ba80bbbe-9398-4042-b341-c8322892f8df"/>
       <a name="integrity" val="41ad8e5ae8ebeb15fe4ec663c5fe9f8e818ecc84"/>
     </comp>
-    <comp lib="4" loc="(460,270)" name="Register">
-      <a name="width" val="16"/>
-      <a name="label" val="PC"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:37:23"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="dd8678bd-eb5d-456e-8303-ded9f6931802"/>
-      <a name="integrity" val="0d70179436bb303051876388e1ba8bc425dd4c7b"/>
-    </comp>
-    <comp lib="2" loc="(1270,460)" name="Multiplexer">
-      <a name="width" val="16"/>
-      <a name="enable" val="false"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="07.03.17 14:19:45"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="f7a510f6-435a-4570-a117-636fb26d60d8"/>
-      <a name="integrity" val="33da6eae835c6ec47c8ad60a148582679163af45"/>
-    </comp>
-    <comp lib="0" loc="(1070,660)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="label" val="clk"/>
-    </comp>
-    <comp lib="6" loc="(81,80)" name="Text">
-      <a name="text" val="Date : 25.02.2014"/>
+    <comp lib="6" loc="(99,60)" name="Text">
+      <a name="text" val="HEIG-VD / Institut REDS"/>
       <a name="font" val="SansSerif plain 13"/>
     </comp>
+    <comp lib="3" loc="(110,260)" name="Adder">
+      <a name="width" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:38:18"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="f3d05c55-3217-4509-8cc0-b97c08518d77"/>
+      <a name="integrity" val="51ccfb57311e67581c10ef9a017b78d72c8c475a"/>
+    </comp>
+    <comp lib="0" loc="(50,300)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x30"/>
+    </comp>
+    <comp lib="3" loc="(1270,580)" name="Adder">
+      <a name="width" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:38:18"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="ca43f49d-001c-44d1-a1bd-9d9e3a739cee"/>
+      <a name="integrity" val="ffd0c82ed71c3815850716478ce63c4b62ee9aea"/>
+    </comp>
+    <comp lib="0" loc="(320,370)" name="Probe">
+      <a name="radix" val="16"/>
+    </comp>
+    <comp lib="6" loc="(96,40)" name="Text">
+      <a name="text" val="LABO ARO 2 - FETCH"/>
+      <a name="font" val="SansSerif bold 13"/>
+    </comp>
+    <comp lib="0" loc="(1220,570)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x2"/>
+    </comp>
+    <comp lib="0" loc="(330,40)" name="Tunnel">
+      <a name="label" val="clk"/>
+    </comp>
+    <comp lib="6" loc="(239,266)" name="Text"/>
     <comp lib="2" loc="(370,300)" name="Multiplexer">
       <a name="width" val="16"/>
       <a name="enable" val="false"/>
@@ -449,27 +481,7 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="fef534b7-cb3e-4453-9553-805a09b22893"/>
       <a name="integrity" val="e9caeb3432e6be481e290ed5952f6490049836a0"/>
     </comp>
-    <comp lib="0" loc="(50,270)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x2"/>
-    </comp>
-    <comp lib="0" loc="(710,210)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="15"/>
-      <a name="label" val="PC_IN"/>
-      <a name="labelloc" val="east"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:02:59"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="0bb37a26-2ce9-40ab-bc7b-9481dc11fbd1"/>
-      <a name="integrity" val="c649ced587b2b93f06a838f3f8a3b63f8e129d64"/>
-    </comp>
     <comp loc="(1200,400)" name="BRANCH_INST"/>
-    <comp lib="0" loc="(330,40)" name="Tunnel">
-      <a name="label" val="clk"/>
-    </comp>
     <comp lib="1" loc="(1310,420)" name="OR Gate">
       <a name="facing" val="north"/>
       <a name="size" val="30"/>
@@ -479,34 +491,22 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="a1dda124-c448-43a0-a8eb-d2ded9871613"/>
       <a name="integrity" val="080486b3bcea1988be3fce671d82315b6283d37a"/>
     </comp>
-    <comp lib="5" loc="(120,830)" name="Button">
-      <a name="facing" val="north"/>
-      <a name="label" val="INTER"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="07.03.17 13:52:57"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="317bdd7c-6840-4cef-9a9d-18fec4e5da9f"/>
-      <a name="integrity" val="51b10ba51faa1728b8f6b323edc1e25e55fe43fd"/>
-    </comp>
-    <comp lib="0" loc="(1150,520)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="3"/>
-      <a name="label" val="Rd"/>
-      <a name="labelloc" val="east"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:02:59"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="d91e0f8f-a299-4b0f-bbb8-d91c3048f651"/>
-      <a name="integrity" val="a27c3178a2f90c3abb25f4edf6ece023caed8750"/>
-    </comp>
     <comp lib="0" loc="(430,340)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="clk"/>
     </comp>
     <comp lib="6" loc="(103,80)" name="Text">
       <a name="font" val="SansSerif plain 13"/>
+    </comp>
+    <comp lib="6" loc="(309,597)" name="Text"/>
+    <comp lib="2" loc="(1270,460)" name="Multiplexer">
+      <a name="width" val="16"/>
+      <a name="enable" val="false"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="07.03.17 14:19:45"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="f7a510f6-435a-4570-a117-636fb26d60d8"/>
+      <a name="integrity" val="33da6eae835c6ec47c8ad60a148582679163af45"/>
     </comp>
     <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
       <a name="text" val="Attention, votre version de Logisim"/>
@@ -558,7 +558,75 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(330,160)" to="(410,160)"/>
     <wire from="(60,160)" to="(70,160)"/>
     <wire from="(240,170)" to="(310,170)"/>
+    <comp lib="4" loc="(160,140)" name="Register">
+      <a name="width" val="16"/>
+      <a name="label" val="PC"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:37:23"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="cdc3d408-ff44-445c-95f5-7c9c1440eb06"/>
+      <a name="integrity" val="fa42c85d7c9771a61f7bbd39f38a17e2b72faa78"/>
+    </comp>
+    <comp lib="0" loc="(430,60)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="15"/>
+      <a name="label" val="PC_IN"/>
+      <a name="labelloc" val="east"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:02:59"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="5ae7cce1-fc5e-42ba-adde-7937faa15401"/>
+      <a name="integrity" val="469d4f8335ac6d53d7a64d637cc257a8febb3228"/>
+    </comp>
+    <comp lib="0" loc="(310,170)" name="Splitter">
+      <a name="fanout" val="1"/>
+      <a name="incoming" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="03.03.17 09:48:17"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="9b6c7981-bdd7-4fbb-8638-0faf20d956d5"/>
+      <a name="integrity" val="f1d25fbd5b498c4caf100774c1035dd362d3c745"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="0"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="0"/>
+      <a name="bit4" val="0"/>
+      <a name="bit5" val="0"/>
+      <a name="bit6" val="0"/>
+      <a name="bit7" val="0"/>
+      <a name="bit8" val="0"/>
+      <a name="bit9" val="0"/>
+      <a name="bit10" val="0"/>
+      <a name="bit11" val="0"/>
+      <a name="bit12" val="0"/>
+      <a name="bit13" val="0"/>
+      <a name="bit14" val="0"/>
+      <a name="bit15" val="0"/>
+    </comp>
+    <comp lib="0" loc="(190,270)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="label" val="CLR"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:39:08"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="2b503120-7685-4c4a-8bce-780b05444551"/>
+      <a name="integrity" val="094848726b5716451d35cc77d68c170f4bcf670f"/>
+    </comp>
+    <comp lib="0" loc="(50,180)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x2"/>
+    </comp>
     <comp lib="0" loc="(160,190)" name="Constant"/>
+    <comp lib="3" loc="(110,170)" name="Adder">
+      <a name="width" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:38:18"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="73bbaa1b-b60c-4d58-91b7-e561637cb748"/>
+      <a name="integrity" val="953e9507df3d2bc42e59f841a6323d08d7f3b87c"/>
+    </comp>
     <comp lib="4" loc="(500,160)" name="ROM">
       <a name="addrWidth" val="15"/>
       <a name="dataWidth" val="16"/>
@@ -588,74 +656,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="version" val="2.13.23.t"/>
       <a name="uuid" val="e911880c-d4f8-42ff-933e-19e4ee216947"/>
       <a name="integrity" val="a4164fb08d923965d1a4c95e2d944935a45ff8aa"/>
-    </comp>
-    <comp lib="3" loc="(110,170)" name="Adder">
-      <a name="width" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:38:18"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="73bbaa1b-b60c-4d58-91b7-e561637cb748"/>
-      <a name="integrity" val="953e9507df3d2bc42e59f841a6323d08d7f3b87c"/>
-    </comp>
-    <comp lib="0" loc="(190,270)" name="Pin">
-      <a name="facing" val="north"/>
-      <a name="label" val="CLR"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:39:08"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="2b503120-7685-4c4a-8bce-780b05444551"/>
-      <a name="integrity" val="094848726b5716451d35cc77d68c170f4bcf670f"/>
-    </comp>
-    <comp lib="4" loc="(160,140)" name="Register">
-      <a name="width" val="16"/>
-      <a name="label" val="PC"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:37:23"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="cdc3d408-ff44-445c-95f5-7c9c1440eb06"/>
-      <a name="integrity" val="fa42c85d7c9771a61f7bbd39f38a17e2b72faa78"/>
-    </comp>
-    <comp lib="0" loc="(50,180)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x2"/>
-    </comp>
-    <comp lib="0" loc="(310,170)" name="Splitter">
-      <a name="fanout" val="1"/>
-      <a name="incoming" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="03.03.17 09:48:17"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="9b6c7981-bdd7-4fbb-8638-0faf20d956d5"/>
-      <a name="integrity" val="f1d25fbd5b498c4caf100774c1035dd362d3c745"/>
-      <a name="bit0" val="none"/>
-      <a name="bit1" val="0"/>
-      <a name="bit2" val="0"/>
-      <a name="bit3" val="0"/>
-      <a name="bit4" val="0"/>
-      <a name="bit5" val="0"/>
-      <a name="bit6" val="0"/>
-      <a name="bit7" val="0"/>
-      <a name="bit8" val="0"/>
-      <a name="bit9" val="0"/>
-      <a name="bit10" val="0"/>
-      <a name="bit11" val="0"/>
-      <a name="bit12" val="0"/>
-      <a name="bit13" val="0"/>
-      <a name="bit14" val="0"/>
-      <a name="bit15" val="0"/>
-    </comp>
-    <comp lib="0" loc="(430,60)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="15"/>
-      <a name="label" val="PC_IN"/>
-      <a name="labelloc" val="east"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:02:59"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="5ae7cce1-fc5e-42ba-adde-7937faa15401"/>
-      <a name="integrity" val="469d4f8335ac6d53d7a64d637cc257a8febb3228"/>
     </comp>
     <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
       <a name="text" val="Attention, votre version de Logisim"/>
@@ -761,123 +761,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="a1d2a853-461f-44ae-873d-4f5f2c7b7421"/>
       <a name="integrity" val="8d3c5d8ab129a67fdce54ea37098c0647034c055"/>
     </comp>
-    <comp lib="0" loc="(1300,300)" name="Probe">
-      <a name="radix" val="16"/>
-    </comp>
-    <comp lib="2" loc="(190,100)" name="Multiplexer">
-      <a name="width" val="16"/>
-      <a name="enable" val="false"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:11:52"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="e2ed8d20-f8d8-4b79-bc68-75a0cb3142a7"/>
-      <a name="integrity" val="f34c401c98a4ed63f27af09015097e9c0dab03c8"/>
-    </comp>
-    <comp lib="4" loc="(460,130)" name="Register">
-      <a name="width" val="16"/>
-      <a name="label" val="PC"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:37:23"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="aed8db4f-6b81-40b1-8dad-81263c076de8"/>
-      <a name="integrity" val="9549d38f38ac43052287591a29396c25c75d18d3"/>
-    </comp>
-    <comp lib="0" loc="(710,70)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="15"/>
-      <a name="label" val="PC_IN"/>
-      <a name="labelloc" val="east"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:02:59"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="c82046e5-21bd-499c-8847-6d79f0a8e6cd"/>
-      <a name="integrity" val="a04d22f716b94885403b704cae6d121797dca223"/>
-    </comp>
-    <comp loc="(1180,260)" name="BRANCH_INST"/>
-    <comp lib="0" loc="(430,180)" name="Constant"/>
-    <comp loc="(310,350)" name="CALC_ADR"/>
-    <comp lib="4" loc="(770,140)" name="ROM">
-      <a name="addrWidth" val="15"/>
-      <a name="dataWidth" val="16"/>
-      <a name="contents">addr/data: 15 16
-2103 188b e7fc 21*0 18cc 2502 1c2c
-</a>
-      <a name="label" val="MEM_INSTRU"/>
-    </comp>
-    <comp lib="2" loc="(340,110)" name="Multiplexer">
-      <a name="width" val="16"/>
-      <a name="enable" val="false"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:11:52"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="b837dd08-f980-4c24-99aa-3dfc8b1d240f"/>
-      <a name="integrity" val="95addb9de9f287ad582ffe9649287b030c535aa6"/>
-    </comp>
-    <comp lib="0" loc="(40,130)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x30"/>
-    </comp>
-    <comp lib="0" loc="(150,390)" name="Constant">
-      <a name="value" val="0x0"/>
-    </comp>
-    <comp lib="0" loc="(40,100)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x2"/>
-    </comp>
-    <comp lib="2" loc="(1230,210)" name="Multiplexer">
-      <a name="width" val="16"/>
-      <a name="enable" val="false"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 10:11:52"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="4262747b-39b9-40e6-94ea-ce4c2d0ee50b"/>
-      <a name="integrity" val="18d049bd052aac242fb0f7da5dc841b4d838fc2e"/>
-    </comp>
-    <comp lib="3" loc="(110,90)" name="Adder">
-      <a name="width" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:38:18"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="e02eb765-9746-4dac-9bbe-a2d7957612b7"/>
-      <a name="integrity" val="ec379200fb16b56c56bb70ce15cbfd5a36b45fe7"/>
-    </comp>
-    <comp lib="0" loc="(290,170)" name="Probe">
-      <a name="facing" val="west"/>
-      <a name="radix" val="16"/>
-    </comp>
-    <comp lib="0" loc="(430,200)" name="Pin">
-      <a name="label" val="clk"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="03.03.17 09:53:44"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="995b9a3d-c31d-4890-b909-d7335df6c293"/>
-      <a name="integrity" val="7dd0b1b0ac22dcfd75563cf8a64cabd400a27afd"/>
-    </comp>
-    <comp lib="0" loc="(170,140)" name="Pin">
-      <a name="facing" val="north"/>
-      <a name="label" val="JUMP"/>
-      <a name="labelloc" val="south"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="03.03.17 09:53:44"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="b59731a3-a41f-4798-a90a-d1483d7ba8e4"/>
-      <a name="integrity" val="9290511794987aa69669b8aae7d95e485ebb7097"/>
-    </comp>
-    <comp lib="0" loc="(620,190)" name="Probe">
-      <a name="facing" val="west"/>
-      <a name="radix" val="16"/>
-    </comp>
-    <comp lib="0" loc="(490,260)" name="Pin">
-      <a name="facing" val="north"/>
-      <a name="label" val="CLR"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="24.02.17 17:39:08"/>
-      <a name="version" val="2.13.23.t"/>
-      <a name="uuid" val="e3760869-767f-40fc-b63e-016c85c2efff"/>
-      <a name="integrity" val="a33219e95ea5861a5c8808398d9cb22f5546bcaf"/>
-    </comp>
     <comp lib="0" loc="(630,160)" name="Splitter">
       <a name="fanout" val="1"/>
       <a name="incoming" val="16"/>
@@ -902,6 +785,133 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="bit13" val="0"/>
       <a name="bit14" val="0"/>
       <a name="bit15" val="0"/>
+    </comp>
+    <comp lib="4" loc="(460,130)" name="Register">
+      <a name="width" val="16"/>
+      <a name="label" val="PC"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:37:23"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="aed8db4f-6b81-40b1-8dad-81263c076de8"/>
+      <a name="integrity" val="9549d38f38ac43052287591a29396c25c75d18d3"/>
+    </comp>
+    <comp lib="3" loc="(110,90)" name="Adder">
+      <a name="width" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:38:18"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="e02eb765-9746-4dac-9bbe-a2d7957612b7"/>
+      <a name="integrity" val="ec379200fb16b56c56bb70ce15cbfd5a36b45fe7"/>
+    </comp>
+    <comp lib="2" loc="(340,110)" name="Multiplexer">
+      <a name="width" val="16"/>
+      <a name="enable" val="false"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:11:52"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="b837dd08-f980-4c24-99aa-3dfc8b1d240f"/>
+      <a name="integrity" val="95addb9de9f287ad582ffe9649287b030c535aa6"/>
+    </comp>
+    <comp lib="0" loc="(490,260)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="label" val="CLR"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="24.02.17 17:39:08"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="e3760869-767f-40fc-b63e-016c85c2efff"/>
+      <a name="integrity" val="a33219e95ea5861a5c8808398d9cb22f5546bcaf"/>
+    </comp>
+    <comp lib="4" loc="(770,140)" name="ROM">
+      <a name="addrWidth" val="15"/>
+      <a name="dataWidth" val="16"/>
+      <a name="contents">addr/data: 15 16
+2103 188b e7fc 21*0 18cc 2502 1c2c
+</a>
+      <a name="label" val="MEM_INSTRU"/>
+    </comp>
+    <comp lib="2" loc="(1230,210)" name="Multiplexer">
+      <a name="width" val="16"/>
+      <a name="enable" val="false"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:11:52"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="4262747b-39b9-40e6-94ea-ce4c2d0ee50b"/>
+      <a name="integrity" val="18d049bd052aac242fb0f7da5dc841b4d838fc2e"/>
+    </comp>
+    <comp lib="0" loc="(620,190)" name="Probe">
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+    </comp>
+    <comp lib="0" loc="(710,70)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="15"/>
+      <a name="label" val="PC_IN"/>
+      <a name="labelloc" val="east"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:02:59"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="c82046e5-21bd-499c-8847-6d79f0a8e6cd"/>
+      <a name="integrity" val="a04d22f716b94885403b704cae6d121797dca223"/>
+    </comp>
+    <comp lib="0" loc="(430,200)" name="Pin">
+      <a name="label" val="clk"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="03.03.17 09:53:44"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="995b9a3d-c31d-4890-b909-d7335df6c293"/>
+      <a name="integrity" val="7dd0b1b0ac22dcfd75563cf8a64cabd400a27afd"/>
+    </comp>
+    <comp lib="2" loc="(190,100)" name="Multiplexer">
+      <a name="width" val="16"/>
+      <a name="enable" val="false"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 10:11:52"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="e2ed8d20-f8d8-4b79-bc68-75a0cb3142a7"/>
+      <a name="integrity" val="f34c401c98a4ed63f27af09015097e9c0dab03c8"/>
+    </comp>
+    <comp lib="0" loc="(150,390)" name="Constant">
+      <a name="value" val="0x0"/>
+    </comp>
+    <comp lib="0" loc="(170,140)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="label" val="JUMP"/>
+      <a name="labelloc" val="south"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="03.03.17 09:53:44"/>
+      <a name="version" val="2.13.23.t"/>
+      <a name="uuid" val="b59731a3-a41f-4798-a90a-d1483d7ba8e4"/>
+      <a name="integrity" val="9290511794987aa69669b8aae7d95e485ebb7097"/>
+    </comp>
+    <comp loc="(310,350)" name="CALC_ADR"/>
+    <comp lib="0" loc="(430,180)" name="Constant"/>
+    <comp lib="0" loc="(290,170)" name="Probe">
+      <a name="facing" val="west"/>
+      <a name="radix" val="16"/>
+    </comp>
+    <comp loc="(1180,260)" name="BRANCH_INST"/>
+    <comp lib="0" loc="(450,110)" name="Clock">
+      <a name="highDuration" val="4"/>
+      <a name="lowDuration" val="4"/>
+      <a name="label" val="sysclk"/>
+      <a name="owner" val="johanna_melly"/>
+      <a name="date" val="25.03.17 12:59:49"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="172742dc-943c-4719-8bc0-c92da5cacd3d"/>
+      <a name="integrity" val="37509f6ca88eb6eb5886c2b920060da257db33a3"/>
+    </comp>
+    <comp lib="0" loc="(40,130)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x30"/>
+    </comp>
+    <comp lib="0" loc="(40,100)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x2"/>
+    </comp>
+    <comp lib="0" loc="(1300,300)" name="Probe">
+      <a name="radix" val="16"/>
     </comp>
     <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
       <a name="text" val="Attention, votre version de Logisim"/>
@@ -946,37 +956,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(240,200)" to="(240,210)"/>
     <wire from="(290,190)" to="(340,190)"/>
     <wire from="(220,140)" to="(220,170)"/>
-    <comp lib="0" loc="(320,140)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="16"/>
-      <a name="label" val="INST_OUT"/>
-      <a name="labelloc" val="east"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="07.03.17 14:16:41"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="c8f6c53e-a72b-46d9-a63c-2a5f13cfd98f"/>
-      <a name="integrity" val="9d5653cbf5ca5e3f2e90b6c0a5a573ce62249ad9"/>
-    </comp>
-    <comp lib="0" loc="(290,140)" name="Bit Extender">
-      <a name="in_width" val="11"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="07.03.17 14:16:18"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="44b8ccd2-be75-49e7-bebd-931938e58d4d"/>
-      <a name="integrity" val="6fccfe1dc3a119002910819cb46eb1b27773147c"/>
-    </comp>
-    <comp lib="0" loc="(140,190)" name="Pin">
-      <a name="width" val="16"/>
-      <a name="label" val="INST"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 12:14:51"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="b2cbd8ca-005a-4d23-bd70-68088c4e58e1"/>
-      <a name="integrity" val="37be1d428c866987d3b81732cbf3c22c82b367b3"/>
-    </comp>
     <comp lib="0" loc="(170,190)" name="Splitter">
       <a name="incoming" val="16"/>
       <a name="owner" val="sven_rouvinez"/>
@@ -1000,6 +979,18 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="bit14" val="1"/>
       <a name="bit15" val="1"/>
     </comp>
+    <comp lib="0" loc="(120,210)" name="Constant">
+      <a name="width" val="5"/>
+      <a name="value" val="0x1c"/>
+    </comp>
+    <comp lib="0" loc="(290,140)" name="Bit Extender">
+      <a name="in_width" val="11"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="07.03.17 14:16:18"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="44b8ccd2-be75-49e7-bebd-931938e58d4d"/>
+      <a name="integrity" val="6fccfe1dc3a119002910819cb46eb1b27773147c"/>
+    </comp>
     <comp lib="0" loc="(340,190)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
@@ -1019,9 +1010,28 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="uuid" val="f3392497-10a5-45b8-a51a-f18ed76f7d29"/>
       <a name="integrity" val="44e5360188bd953f35b23dbdd95268d39e0f47fe"/>
     </comp>
-    <comp lib="0" loc="(120,210)" name="Constant">
-      <a name="width" val="5"/>
-      <a name="value" val="0x1c"/>
+    <comp lib="0" loc="(320,140)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="width" val="16"/>
+      <a name="label" val="INST_OUT"/>
+      <a name="labelloc" val="east"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="07.03.17 14:16:41"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="c8f6c53e-a72b-46d9-a63c-2a5f13cfd98f"/>
+      <a name="integrity" val="9d5653cbf5ca5e3f2e90b6c0a5a573ce62249ad9"/>
+    </comp>
+    <comp lib="0" loc="(140,190)" name="Pin">
+      <a name="width" val="16"/>
+      <a name="label" val="INST"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 12:14:51"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="b2cbd8ca-005a-4d23-bd70-68088c4e58e1"/>
+      <a name="integrity" val="37be1d428c866987d3b81732cbf3c22c82b367b3"/>
     </comp>
     <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
       <a name="text" val="Attention, votre version de Logisim"/>
@@ -1077,6 +1087,58 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(270,210)" to="(310,210)"/>
     <wire from="(210,220)" to="(210,250)"/>
     <wire from="(500,210)" to="(540,210)"/>
+    <comp lib="3" loc="(480,190)" name="Adder">
+      <a name="width" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="05.03.17 13:32:39"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="c62ddd88-bbd8-4032-b75a-a3179efbed60"/>
+      <a name="integrity" val="d5e413310d6095c215577034048db6d319b06a8a"/>
+    </comp>
+    <comp lib="0" loc="(410,180)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x4"/>
+    </comp>
+    <comp lib="2" loc="(570,200)" name="Multiplexer">
+      <a name="width" val="16"/>
+      <a name="enable" val="false"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="10.03.17 09:05:56"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="bed4b0ff-acdc-484f-8e56-4aea1ac641f1"/>
+      <a name="integrity" val="282f221529d2cf9318480c5bd1259badcbded000"/>
+    </comp>
+    <comp lib="3" loc="(350,200)" name="Adder">
+      <a name="width" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="05.03.17 13:32:39"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="136b22a2-efef-4ae4-a847-f67d3f646677"/>
+      <a name="integrity" val="6e2df4bce83c3e4ca6e881641f4c2e16c4f263a8"/>
+    </comp>
+    <comp lib="0" loc="(550,300)" name="Pin">
+      <a name="facing" val="north"/>
+      <a name="label" val="COMPUTE"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="10.03.17 09:05:15"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="4cb72486-d4e3-4054-9a16-379cc7fdcc9b"/>
+      <a name="integrity" val="1346448233fa8174aec9d88a535529addef4c13b"/>
+    </comp>
+    <comp lib="0" loc="(120,150)" name="Pin">
+      <a name="width" val="16"/>
+      <a name="label" val="PC"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="05.03.17 13:43:56"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="49609739-4e9f-4b97-bac8-60a191772174"/>
+      <a name="integrity" val="d303f28bd91154e0b635848f8ecf56a41ae30bb8"/>
+    </comp>
+    <comp lib="0" loc="(120,190)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0x2"/>
+    </comp>
     <comp lib="0" loc="(650,200)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
@@ -1089,15 +1151,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="version" val="2.13.24.t"/>
       <a name="uuid" val="0d15ea6d-2574-4253-80f6-0e72ab3a0e72"/>
       <a name="integrity" val="e2fb39faaac35fc21a3595a62ba8e5dec9c79b37"/>
-    </comp>
-    <comp lib="2" loc="(570,200)" name="Multiplexer">
-      <a name="width" val="16"/>
-      <a name="enable" val="false"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="10.03.17 09:05:56"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="bed4b0ff-acdc-484f-8e56-4aea1ac641f1"/>
-      <a name="integrity" val="282f221529d2cf9318480c5bd1259badcbded000"/>
     </comp>
     <comp lib="0" loc="(120,260)" name="Pin">
       <a name="width" val="16"/>
@@ -1116,49 +1169,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="version" val="2.13.24.t"/>
       <a name="uuid" val="e223ecae-6975-4c2c-aeca-5506256300ca"/>
       <a name="integrity" val="3e8a44c587024c101ce5f98f1a833b8e292a2e53"/>
-    </comp>
-    <comp lib="3" loc="(480,190)" name="Adder">
-      <a name="width" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="05.03.17 13:32:39"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="c62ddd88-bbd8-4032-b75a-a3179efbed60"/>
-      <a name="integrity" val="d5e413310d6095c215577034048db6d319b06a8a"/>
-    </comp>
-    <comp lib="0" loc="(550,300)" name="Pin">
-      <a name="facing" val="north"/>
-      <a name="label" val="COMPUTE"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="10.03.17 09:05:15"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="4cb72486-d4e3-4054-9a16-379cc7fdcc9b"/>
-      <a name="integrity" val="1346448233fa8174aec9d88a535529addef4c13b"/>
-    </comp>
-    <comp lib="0" loc="(410,180)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x4"/>
-    </comp>
-    <comp lib="0" loc="(120,150)" name="Pin">
-      <a name="width" val="16"/>
-      <a name="label" val="PC"/>
-      <a name="radix" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="05.03.17 13:43:56"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="49609739-4e9f-4b97-bac8-60a191772174"/>
-      <a name="integrity" val="d303f28bd91154e0b635848f8ecf56a41ae30bb8"/>
-    </comp>
-    <comp lib="3" loc="(350,200)" name="Adder">
-      <a name="width" val="16"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="05.03.17 13:32:39"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="136b22a2-efef-4ae4-a847-f67d3f646677"/>
-      <a name="integrity" val="6e2df4bce83c3e4ca6e881641f4c2e16c4f263a8"/>
-    </comp>
-    <comp lib="0" loc="(120,190)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0x2"/>
     </comp>
     <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
       <a name="text" val="Attention, votre version de Logisim"/>
@@ -1205,28 +1215,17 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
     <wire from="(140,170)" to="(190,170)"/>
     <wire from="(180,130)" to="(310,130)"/>
     <wire from="(150,130)" to="(170,130)"/>
-    <comp lib="0" loc="(100,180)" name="Constant">
-      <a name="width" val="10"/>
-      <a name="value" val="0x70"/>
-    </comp>
-    <comp lib="3" loc="(230,160)" name="Comparator">
-      <a name="width" val="10"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="10.03.17 10:39:47"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="73495bad-2192-40f5-8ab1-0779f35e4e05"/>
-      <a name="integrity" val="4e03be9acc1cde15720a8de384b1e768db1b2330"/>
-    </comp>
-    <comp lib="0" loc="(310,160)" name="Pin">
+    <comp lib="0" loc="(310,130)" name="Pin">
       <a name="facing" val="west"/>
       <a name="output" val="true"/>
-      <a name="label" val="OP"/>
+      <a name="width" val="3"/>
+      <a name="label" val="Rn"/>
       <a name="labelloc" val="east"/>
       <a name="owner" val="sven_rouvinez"/>
       <a name="date" val="04.03.17 12:30:48"/>
       <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="5eb53349-6931-4ab9-a4d6-9ff3b1d713d6"/>
-      <a name="integrity" val="b319fa8ca9169db052bfcc5f1e403f690f9b0ca7"/>
+      <a name="uuid" val="6eae5cfb-d0bb-44f0-ba8a-fee3d87b27a1"/>
+      <a name="integrity" val="f182cda85d586e738684617d934bf9b7367f8237"/>
     </comp>
     <comp lib="0" loc="(310,110)" name="Pin">
       <a name="facing" val="west"/>
@@ -1239,6 +1238,29 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="version" val="2.13.24.t"/>
       <a name="uuid" val="f38e6e76-8b19-4453-b986-604aa022f62b"/>
       <a name="integrity" val="d9d91bff846750964d9ccf0fd4b0abb4ed477aec"/>
+    </comp>
+    <comp lib="0" loc="(310,160)" name="Pin">
+      <a name="facing" val="west"/>
+      <a name="output" val="true"/>
+      <a name="label" val="OP"/>
+      <a name="labelloc" val="east"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.03.17 12:30:48"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="5eb53349-6931-4ab9-a4d6-9ff3b1d713d6"/>
+      <a name="integrity" val="b319fa8ca9169db052bfcc5f1e403f690f9b0ca7"/>
+    </comp>
+    <comp lib="0" loc="(100,180)" name="Constant">
+      <a name="width" val="10"/>
+      <a name="value" val="0x70"/>
+    </comp>
+    <comp lib="3" loc="(230,160)" name="Comparator">
+      <a name="width" val="10"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="10.03.17 10:39:47"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="73495bad-2192-40f5-8ab1-0779f35e4e05"/>
+      <a name="integrity" val="4e03be9acc1cde15720a8de384b1e768db1b2330"/>
     </comp>
     <comp lib="0" loc="(130,160)" name="Splitter">
       <a name="fanout" val="3"/>
@@ -1263,18 +1285,6 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="bit13" val="2"/>
       <a name="bit14" val="2"/>
       <a name="bit15" val="2"/>
-    </comp>
-    <comp lib="0" loc="(310,130)" name="Pin">
-      <a name="facing" val="west"/>
-      <a name="output" val="true"/>
-      <a name="width" val="3"/>
-      <a name="label" val="Rn"/>
-      <a name="labelloc" val="east"/>
-      <a name="owner" val="sven_rouvinez"/>
-      <a name="date" val="04.03.17 12:30:48"/>
-      <a name="version" val="2.13.24.t"/>
-      <a name="uuid" val="6eae5cfb-d0bb-44f0-ba8a-fee3d87b27a1"/>
-      <a name="integrity" val="f182cda85d586e738684617d934bf9b7367f8237"/>
     </comp>
     <comp lib="0" loc="(100,160)" name="Pin">
       <a name="width" val="16"/>
