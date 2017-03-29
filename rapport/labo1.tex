@@ -282,23 +282,30 @@ Ce bloc regroupe tous les blocs précédent, et permet de simuler une interrupti
 \medskip
 Une grande partie de ce circuit fonctionne comme le précédent, à savoir: un MUX permet de choisir entre l'adresse à laquelle est additionnée 2 à chaque coup d'horloge, ou l'adresse 0x30, qu'on veut atteindre lorsque l'on presse le bouton \textbf{INTER}. On a ensuite ensuite un registre 16 bits, dont on ignore le dernier bit en sortie. Grâce au +2 en amont, l'adresse est correcte lorsqu'elle est transmise à la mémoire. On peut facilement le vérifier grâce à la sortie \textbf{PC\_IN}. Ensuite, nous retrouvons inévitablement la mémoire, dont l'instruction de sortie est déterminée par l'adresse \textbf{PC\_IN} en entrée de celle-ci.\medskip
 
-<<<<<<< HEAD
 La partie suivante diffère légèrement. Il y a tout d'abord le bloc \text{BRANCH\_INST} qui permet de détecter les inctructions de saut. Ainsi, l'instruction 0xe7fa en mémoire est atteinte (à l'adresse 0x0004), les bits 15 à 11 de l'instruction équivalent à 0b11100. Additionnés à 0x1c dans \textbf{BRANCH\_INST}, il y a bien un bit d'overflow, et l'instruction JUMP va donc être délenchée. En sortie op, il y aura, comme expliqué dans le bloc \textbf{BRANCH\_INST} (voir ref \ref{branchinst}), les bits 10-0 de 0xe7fa, donc 0xfffa. Ces bits sont en entrée dans le bloc \textbf{CALC\_ADR}, qui va, comme expliqué précédemment, effectuer les diverses opérations qui permettent de caculer l'adresse de saut. Cette adresse sera égale à 0x0000, ainsi à chaque fois que l'instruction 0xe7fa est effectuée, un saut à l'adresse 0x0000 de la mémoire est effectué.\\
 L'interupteur \textbf{INTER}, lorsqu'il est pressé, permet de choisir l'adresse 0x30 et donc de faire un saut à l'adresse 0x30 dans la mémoire. L'INTER est aussi relié au registre LR. Ainsi, lorsque INTER est activé, l'adresse PC est chargée dans le LR, juste avant qu'il passe à 0x30.\medskip \\
-=======
-La partie suivante diffère légèrement. On retrouve d'abord le bloc \text{BRANCH\_INST} qui permet de détecter les inctructions de saut. Ainsi, lorsque l'on atteint l'instruction 0xe7fa en mémoire (à l'adresse 0x0004), les bits 15 à 11 de l'instruction équivalent à 0b11100. Additionné à 0x1c dans \textbf{BRANCH\_INST}, on a bien un bit d'overflow et donc l'instruction de saut va être délenchée. En sortie \textbf{OP}, on aura, comme expliqué dans le bloc \textbf{BRANCH\_INST} (voir \ref{branchinst}), les bits 10-0 de 0xe7fa, donc 0xfffa. Ces bits sont en entrée dans le bloc \textbf{CALC\_ADR}, qui va, comme expliqué précédemment, effectuer les diverses opérations qui permettent de caculer l'adresse de saut. Cette adresse sera égale à 0x0000, ainsi à chaque fois que l'instruction 0xe7fa est effectuée, on retrourne à l'adresse 0x0000 de la mémoire.\\
-L'interrupteur \textbf{INTER}, lorsqu'il est pressé, permet de choisir l'adresse 0x30 et donc de faire un saut à l'adresse 0x30 dans la mémoire. L'INTER est aussi relié au registre LR. Ainsi, lorsque INTER est activé, l'adresse suivante du PC est chargée dans le LR, juste avant qu'il passe à 0x30.\medskip \\
->>>>>>> 2d10c84d805f7b661152fd7edecbd143e27f54c3
 
 Le bloc \textbf{MOV\_INST} permet de détecter l'instruction MOV. Il va détecter si les bits 15 à 6 sont égal à 0x70 (MOV). Ici, l'instruction à détecter est 0x1c2c. Les bits 15-6 de cette instruction sont 0b0001110000, ce qui correspond bien à 0x70. 
 \\Ainsi, l'instruction MOV va être activée. Le registre source (ici r5) correspond aux bits 5-3 et le registre destination (ici r4) correspond aux bits 2-0. On peut voir sur la figure ci-dessous la détection de l'instruction MOV, et les registres source et destination en sortie de \textbf{MOV\_INST}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{src/FETCH_INTER_1c2c.png}
-    \caption{Intruction MOV}
-    \label{fetch_inter}
+    \includegraphics[width=1\textwidth]{src/CHRONO_MAIN.png}
+    \caption{Chronogramme du fetch}
+    \label{fetch_chrono}
 \end{figure}
+
+Le chronogramme ci-dessus illustre le bon fonctionnement du programme. Le programme ayant de nombreuses entrées et sorties qu'il était important de prendre en compte dans le chronogramme, celui-ci est assez long et a été coupé en trois parties superposées. Le chronogramme a été réalisé de cette façon:
+\begin{enumerate}
+    \item \textit{Parcourt des adresses jusqu'à l'instruction 0xe7fa, dans le but de vérifier qu'il y a bien un saut à l'adresse 0x0000 juste après.}\\
+    Dans la partie supérieure du chronogramme, lorsque \textbf{PC\_IN} est à l'adresse 4, il y a l'instruction 0xe7fa en sortie \textbf{FETCH\_OUT}. Au coup d'horloge suivant, le \textbf{PC\_IN} est à 0. Il y a donc bien un saut qui a été effectué.
+    \item \textit{Pression du bouton interruption pour vérifier qu'il y a bien un saut à l'adresse 0x30 et que le LR est chargé avec avec l'adresse PC.}\\
+    Le bouton \textbf{INTER} a été pressé tout au début de la partie centrale du chronogramme. À ce moment, un multiplexer qui permet de choisir entre l'adresse suivante + 2 (lorsqu'il est à 0) ou l'adresse 0x30 (lorsqu'il est à 1) passe à 1, et ainsi l'adresse de \textbf{PC} passe à 0x30. A ce moment, le regitre \textbf{LR}, dont l'entrée \textbf{WE} est reliée à \textbf{INTER}, charge la valeur 0x30. Les conditions sont donc bien vérifiées.
+    
+    \item \textit{Parcourt des adresses jusqu'à l'instruction 0x1c2c, dans le but de vérifier qu'elle est bien détectée, et qu'il y a bien un MOV(r4,r5) effectué.}\\
+    Après le saut à l'adresse 0x30, les instructions sont parcourues une à une jusqu'à atteindre l'instruction 0x1c2c, qui est une instruction MOV. Ainsi, elle est détectée par le bloc \textbf{MOV\_INST}, dont la sortie \textbf{OP} passe à 1  (visible sur la partie centrale du chronogramme). À ce moment, les sorties \textbf{Rd} et \textbf{Rn} du bloc \textbf{MOV\_INST} sont respectivement à 4 et à 5, ce qui correspond aux valeurs attendues. Ainsi, un saut est effectué, l'instruction MOV a donc bien été détectée et interprétée correctement. Un saut est donc effectué à l'adresse 0x30, et les adresses sont parcourues normalement, jusqu'à atteindre 0x1c2c, où l'opération est répétée.
+\end{enumerate}
+
 
 \section{Conclusion}
 Dans ce laboratoire, nous avons pu mettre en pratique la théorie vue en classe, qui peut parfois être un peu floue jusqu'à avoir un exemple concret. Nous avons appris à manipuler des adresses de mémoire et des instructions, compris le fonctionnement de ces dernières et la façon dont elles étaient segmentées, chaque portion de bits contenant une information qui permet d'effectuer les bonnes opérations aux bons endroits. \\
