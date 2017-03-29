@@ -73,16 +73,214 @@
 \section{Objectifs du laboratoire}
 Ce laboratoire consistait en la réalisation d'un décodeur, qui comprenait aussi une partie gérant les instruction MOV et ADD. Son bon fonctionnement devait être testé à l'aide du main fourni dans le workspace du laboratoire.
 
-\section{Blocs Logisim}
-Nous avons décidé de séparer les blocs afin de permettre une meilleure modularité et abstraction du système DECODE.\\
+\section{Blocs Logisim étapes 1 à 3}
+Il y avait 2 circuits logisim à rendre pour ce labo, cette partie traite des étapes concernant la mise en place du système et uniquement du traitetement de l'instruction MOV, à la partie 2 s'ajoute l'instruction ADD.\\
+Nous avons donc décidé de séparer les blocs afin de permettre une meilleure modularité et abstraction du système DECODE.\\
+\paragraph{Résumé}
+\begin{itemize}
+    \item     MOV\_INST détecte une instruction \textbf{MOV}
+    \item     REGISTER\_16BITS contient les registres (banque de registres)
+    \item     DECODE décode les instructions \textbf{MOV} et \textbf{ADD} et les transmet à la banque de registre
+    \item     main le bloc principal, avec la mémoire contenant les instructions, et le \textbf{DECODE}
+\end{itemize}
+
+\subsection{MOV\_INST}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/MOV_INST.png}
+    \caption{Instruction MOV}
+    \label{mov_img}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     INST: code complet
+    \item     0x70: code recherché pour un MOV avec un registre comme destination
+    \item     0x04: code recherché pour un MOV avec valeur immédiate
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     Rd: registre destination
+    \item     Rn: registre source
+    \item     IsMov: s'active si les bits de 15 à 9 sont égaux à $0001110000$ (0x070) ou à $0000010$ (0x04).
+    \item     Imm: valeur immédiate
+    \item     Rd\_Imm: registre destination pour MOV avec valeur immédiate
+    \item     IsMovImm: s'active s'il y a un MOV avec valeur immédiate
+
+\end{itemize}
+
+\medskip
+
+Ce bloc permet de détecter si une instruction \textbf{MOV} est trouvée, grâce au comparateur dans le code de sortie de la ROM.
+\\Cette instruction va charger la valeur du registre source (Rn) dans le registre destination (Rd).\\
+Elle se caractérise par le code ci-dessous : 
+\\
+\begin{tabular}{|ccccccc|ccc|ccc|ccc|}
+    \hline
+    \multicolumn{7}{|c|}{Code ARM}  & \multicolumn{3}{|c|}{Opcode} & \multicolumn{3}{|c|}{Rn} & \multicolumn{3}{|c|}{Rd}\\
+    \hline
+    15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6                    & 5 & 4 & 3                & 2 & 1 & 0 \\
+    \hline
+    0  & 0  & 0  & 1  & 1  & 1  & 0 & 0 & 0 & 0                    & \multicolumn{3}{|c|}{}   &\multicolumn{3}{|c|}{}\\
+    \hline     
+    \end{tabular}
+\\
+
+\begin{itemize}
+    \item     Code ARM : instruction ARM à effectuer
+    \item     Opcode : instruction à effectuer par l'ALU
+    \item     Rn : registre source
+    \item     Rd : registre destination
+\end{itemize}
+
+\medskip
+Nous avons donc deux codes ARM différents, selon la valeur donnée pour Rd, qui peut être une valeur immédiate ou non. Ainsi, dans ce bloc, la sortie \textbf{IsMovImm} va indiquer le si l'instruction indique un registre ou une valeur. 
+\\La sortie \textbf{IsMov} va être activée, indépendamment de s'il s'agit d'une valeur immédiate ou non, puisqu'elle indique uniquement s'il y a eu une instruction MOV.
+
+
+
+    
+\subsection{REGISTER\_16BITS} \label{regi16}
+Ce bloc permet de stocker et retourner les différentes valeurs des instructions transmises.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/REGISTERS_16BITS.png}
+    \caption{Banque de registres}
+    \label{regi16_img}
+\end{figure}
+
+
+
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     W\_DATA: contient les données à entrer
+    \item     WRITE\_EN: active l'écriture
+    \item     clk: horloge
+    \item     CLR: reset
+    \item     Rd: registre destination
+    \item     Rn: registre source
+    \item     RnInRd: est actif si pas de valeur immédiate
+\end{itemize}
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item OUT\_DATA\_Rn: valeur du registre choisi
+\end{itemize}
+
+\medskip
+Il permet de choisir s'il faut travailler avec une valeur d'un registre ou une valeur immédiate, une choisissant le registre (Rd) dans lequel inscrire les données, et une permettant la sortie des adresses (Rn), selon le registre.
+Ainsi, les données sont reçues en entrée \textbf{W\_DATA} qui selon l'instruction vont être issue d'une valeur existante dans un registre ou une donnée immédiate via l'offset. 
+\\Si l'entrée \textbf{WRITE\_EN} est active, alors l'élément decode va permettre l'écriture dans un registre choisi (grâce à \textbf{Rd}) des données.
+
+
+\subsection{DECODE}
+Ce bloc est l'élément principal de notre circuit, il aiguille les instructions et leur données dans les registres corrects.
+Afin de permettre une abstraction complète des systèmes entre eux, nous avons décidé d'utiliser des extenders de $n \rightarrow 16$ bits.\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/DECODE.png}
+    \caption{Decode}
+    \label{decode_img}
+\end{figure}
+
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     INST: instruction à effectuer
+    \item     clk: horloge
+    \item     CLR: reset
+\end{itemize}
+
+\paragraph{Définition de la sortie:}
+\begin{itemize}
+    \item     S\_Rn: Registre source
+\end{itemize}
+\medskip
+Les sorties des blocs \textbf{MOV\_INST} étant toutes reliées à des entrées du bloc \textbf{REGISTERS\_16BITS}, le circuit \textbf{DECODE} sera expliqué en décrivant les liens entre les 2 circuits.\\
+
+\paragraph{W\_DATA:} 
+Cette entrée est reliée à la sortie Imm du \textbf{MOV\_INST}. Elle va prendre la valeur immédiate en sortie de MOV, selon l'instruction donnée. Cette sortie correpond à la valeur immédiate de l'instruction MOV et est sur 8 bit, elle passe donc dans un extendeur qui permet de passer à 16 bits. S
+
+\paragraph{RnInRd:} 
+Prend en entrée une négation du IsMovImm, qui indique que la valeur de l'instruction MOV n'est pas immédiate et donc la valeur à récupérer se trouve dans un registre.
+
+\paragraph{Rn:}
+Le Rn du \textbf{MOV\_INST} est connecté en direct au Rn du \textbf{REGISTER\_16BITS}
+
+\paragraph{WRITE\_EN:}
+Activée s'il y a une instruction MOV détectée
+
+\paragraph{Rd:}
+L'entrée Rd du \textbf{REGISTER\_16bits} prend en entrée la sortie Rd du bloc \textbf{MOV\_INST} ou si valeur immédiate il y a, Rd\_Imm, selon les données de l'instruction\\
+
+Les deux dernières entrées du bloc (clk et CLR) sont simplement l'horloge et le reset.
+
+
+
+
+\subsection{main}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/main.png}
+    \caption{Main program}
+    \label{main_img}
+\end{figure}
+
+Le circuit main nous a permis de contrôler le bon fonctionnement de notre \textbf{DECODE}. Notre fichier main.S contenait comme instructions:\\
+
+\begin{tabular}{|c|c|c|c|}    
+    \hline
+    INST & Rd & Rn \\
+    \hline
+    MOV  & r0 & \#27    \\
+    \hline
+    MOV  & r2 & \#4    \\
+    \hline
+    MOV  & r3 & \#67    \\
+    \hline
+    MOV  & r1 & r3  \\
+    \hline
+    MOV  & r0 & r2 \\
+    \hline
+    MOV  & r1 & 0xAC    \\
+    \hline
+\end{tabular}
+
+\paragraph{Afin de tester} les valeurs de notre circuit, un autre tableau avec les valeurs des registres qui changent pendant le fonctionnement:\\
+
+\begin{tabular}{|c|c|c|c|c|}    
+    \hline
+    Temps (coup de clk) & $R_0$ & $R_1$          & $R_2$          & $R_3$ \\
+    \hline
+    0                   & 0     & 0              & 0              & 0 \\
+    \hline
+    1                   & \textbf{27}            & 0     & 0     & 0   \\
+    \hline
+    2                   & 27    & 0              & \textbf{4}     & 0 \\
+    \hline
+    3                   & 27    & 0              & 4              & \textbf{67}  \\
+    \hline
+    4                   & 27    & \textbf{67}    & 4     & 67\\
+    \hline
+    5                   & \textbf{27}    & 67    & 27    & 67 \\
+    \hline
+    6                   & 27    & \textbf{172}    & 27    & 67\\
+    \hline
+\end{tabular}
+
+    
+    
+\section{Blocs Logisim étape 4}
+Les blocs existants du chapitre ci-dessus sont repris mais ne seront pas décrit ici, sauf si des changements ont dû être fait.
 \paragraph{Résumé}
 \begin{itemize}
     \item     MOV\_INST détecte une instruction \textbf{MOV}
     \item     ADD\_INST détecte une instruction \textbf{ADD}
     \item     REGISTER\_16BITS banque de registres
     \item     DECODE Décode les instructions \textbf{MOV} et \textbf{ADD} et les transmet à la banque de registre
-    \item     main bloc principal, avec la mémoire contenant les instructions, et le \textbf{DECODE}
+    \item     main le bloc principal, avec la mémoire contenant les instructions, et le \textbf{DECODE}
 \end{itemize}
+
 \subsection{MOV\_INST}
 
 \begin{figure}[H]
@@ -102,10 +300,10 @@ Nous avons décidé de séparer les blocs afin de permettre une meilleure modula
 \begin{itemize}
     \item     Rd: registre destination
     \item     Rn: registre source
-    \item     isMOV: s'active si les bits de 15 à 9 sont égaux à $0001110$ (0x70) ou à $0000010$ (0x04).
+    \item     IsMov: s'active si les bits de 15 à 9 sont égaux à $0001110$ (0x70) ou à $0000010$ (0x04).
     \item     Imm: valeur immédiate
     \item     Rd\_Imm: registre destination pour MOV avec valeur immédiate
-    \item     isMovimm: s'active si on a un MOV avec valeur immédiate
+    \item     IsMovimm: s'active si on a un MOV avec valeur immédiate
 
 \end{itemize}
 
@@ -133,7 +331,8 @@ Elle se caractérise par le code ci-dessous :
 \end{itemize}
 
 \medskip
-Nous avons donc deux code ARM différents, selon la valeur donnée pour RD, qui peut être une valeur imméiate (en héxadécimal). Ainsi, dans ce bloc, on a les sorties correspondant au registres et valeurs concernées, et on peut vérifier le type de donnée grâce à la sortie \textbf{isMovImm} qui va indiquer le type de donnée. La sortie \textbf{isMOV} va être activée, indépendamment de s'il s'agit d'une valeur immédiate ou non, puisqu'elle indique uniquement s'il y a eu une instruction MOV.
+Nous avons donc deux code ARM différents, selon la valeur donnée pour RD, qui peut être une valeur imméiate (en héxadécimal). Ainsi, dans ce bloc, on a les sorties correspondant au registres et valeurs concernées, et on peut vérifier le type de donnée grâce à la sortie \textbf{IsMovImm} qui va indiquer le type de donnée. La sortie \textbf{IsMov} va être activée, indépendamment de s'il s'agit d'une valeur immédiate ou non, puisqu'elle indique uniquement s'il y a eu une instruction MOV.
+
 
 
 \subsection{ADD\_INST} \label{addinst}
@@ -175,39 +374,6 @@ L'instruction ADD se présente comme suit:
     La sortie est précédé d'un porte AND qui vérifie que les critères permettant de reconnaître qu'il s'agit bien d'une instruction ADD.
     
     
-\subsection{REGISTER\_16BITS} \label{regi16}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=.8\textwidth]{src/REGISTERS_16BITS.png}
-    \caption{Banque de registres}
-    \label{regi16_img}
-\end{figure}
-
-
-
-\paragraph{Définition des entrées:}
-\begin{itemize}
-    \item     W\_DATA: contient les données à entrer
-    \item     WRITE\_EN: active l'écriture
-    \item     clk: horloge
-    \item     CRL: reset
-    \item     Rd: registre destination
-    \item     RnInRd: est actif si on n'a pas de valeur immédiate
-\end{itemize}
-\paragraph{Définition des sorties:}
-\begin{itemize}
-    \item Rn: registre source 2
-    \item Rm: registre source 1
-    \item OUT\_DATA\_Rn: sortie correspondant au registre 2
-    \item OUT\_DATA\_Rm: sortie correspondant au registre 1
-\end{itemize}
-\medskip
-Ce bloc est composé d'une partie permettant de choisir le type de donnée, une choisissant le registre dans lequel inscrire les données, et une permettant la sortie des adresses, selon le registre.
-Ainsi, les données sont reçue en entré \textbf{W\_DATA}, elle-même en entrée dans un MUX qui détermine s'il fait envoyer la valeur immédiate aux registres, ou une valeur calculée. Si l'entrée \textbf{WRITE\_EN} est active, alors le decode va permettre l'écriture dans un registre choisi (grâce à \textbf{Rd}) des données.
-En sortie, deux MUX permettent de choisir le registre dont on veut les données en sortie.
-
-
-
 \subsection{DECODE}
 \begin{figure}[H]
     \centering
@@ -243,8 +409,6 @@ Les sorties des blocs \textbf{MOV\_INST} et \textbf{ADD\_INST} étant toutes rel
 \medskip \\
 Les deux dernière entrées du bloc (clk et CLR) sont simplement l'horloge et le reset.
 
-
-
 \subsection{main}
 \begin{figure}[H]
     \centering
@@ -253,7 +417,7 @@ Les deux dernière entrées du bloc (clk et CLR) sont simplement l'horloge et le
     \label{main_img}
 \end{figure}
 
-Le main program  nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction:
+Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction:
 
 \begin{tabular}{|c|c|c|c|}
     
@@ -274,10 +438,6 @@ Le main program  nous a permis de contrôler le bon fonctionnement de notre DECO
     \hline
 \end{tabular}
     
-    
-
-
-
 
 \section{Conclusion}
 Dans ce laboratoire, nous avons pu mettre en pratique la théorie vue en classe, qui peut parfois être un peu floue jusqu'à avoir un exemple concret. Nous avons appris à manipuler des adresses de mémoire et des instructions, compris le fonctionnement de ces dernières et la façon dont elles étaient segmentées, chaque portion de bits contenant une information qui permet d'effectuer les bonnes opérations aux bons endroits. \\
