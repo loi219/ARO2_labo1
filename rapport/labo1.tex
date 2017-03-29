@@ -208,7 +208,7 @@ Ensuite, nous effectuons le calcul avec un PC à $4$ et un INST\_OUT de 0xfffc: 
 Dans ce bloc, l'adresse fournie va subir 3 opérations. Elle va être multipliée par 2 (offset), addionnée au PC, puis additionnée à 4.\\
 L'entrée \textbf{COMPUTE} permet de passer outre ce calcul si l'instruction venait à être différente à un MOV.
 \\
-Si, par exemple, l'entrée \textbf{ADR} 0xfffc, et le \textbf{PC} 0x0004 (cas que nous rencontrons plus tard dans ce labo) en multipliant par 2 on obtient 0xfff8, puis en ajoutant l'entrée PC à 0x0004 on obient 0xfffc, et, pour finir, en ajoutant 4, on obtient 0x20000. Ainsi, puisque la sortie est sur 4 bits, on obtient 0x0000 en \textbf{ADR\_OUT}. On sait donc que l'adresse après saut est 0x0000.
+Si, par exemple, l'entrée \textbf{ADR} 0xfffc, et le \textbf{PC} 0x0004 (cas que nous rencontrons plus tard dans ce labo) en multipliant par 2 on obtient 0xfff8, puis en ajoutant l'entrée PC à 0x0004 on obient 0xfffc, et, pour finir, en ajoutant 4, on obtient 0x20000. Ainsi, puisque la sortie est sur 4 bits, on obtient 0x0000 en \textbf{ADR\_OUT}. L'adresse après saut sera donc 0x0000.
 
 \subsection{FETCH\_16BITS}
 \begin{figure}[H]
@@ -230,12 +230,10 @@ Si, par exemple, l'entrée \textbf{ADR} 0xfffc, et le \textbf{PC} 0x0004 (cas qu
     \item     PC\_IN: adresse en sortie du splitter
 \end{itemize}
 \medskip
-<<<<<<< HEAD
-Ce circuit permet de parcourir les adresses en mémoire. On a un register 16 bits qui parcourt les adresses. Comme on veut ignorer la première adresse (0), un splitter à la sortie du registre va prendre 15 bits uniquement, et le bit de poids faible ne va pas être retenu. La raison de la suppression du bit de poids faible, est que les adresses sont par bloc de 2 bytes, et auront donc toujours un nombre pair. Ainsi, le bit de poids faible n'est pas signification puisqu'il sera toujours à 0. Puisqu'on veut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse on divise l'adresse par deux, on ajoute un additionneur +2 au début du regiter. Cela va permettre de doubler l'adresse, et ainsi, en supprimant de bit de poids faible, on obtient l'adresse attendue. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
-=======
-Ce circuit permet de parcourir les adresses en mémoire. \\
-Il y a un register 16 bits qui parcourt les adresses. Pour ignorer le premier bit (0), un splitter à la sortie du registre va prendre 15 bits uniquement (1..15), et le bit de poids faible ne va pas être retenu. Mais puisqu'il faut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse elle est divisée par deux, on ajoute un additionneur +2 au début du register. Cela va permettre de doubler l'adresse, et ainsi, en supprimant de bit de poids faible, on obtient l'adresse attendue. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
->>>>>>> 2d10c84d805f7b661152fd7edecbd143e27f54c3
+
+Ce circuit permet de parcourir les adresses en mémoire. Un register 16 bits parcourt les adresses. Le bit 0 ne doit pas être pris en compte, ainsi splitter à la sortie du registre va prendre 15 bits uniquement. La raison de la suppression du bit de poids faible est que les adresses sont par bloc de 2 bytes, et auront donc toujours un nombre pair. Ainsi, le bit de poids faible n'est pas significatif puisqu'il sera toujours à 0. Puisqu'on veut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse on divise l'adresse par deux, on ajoute un additionneur +2 au début du regiter. Cela va permettre de doubler l'adresse et donc obtenir l'adresse attendue malgré cette modification. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
+
+
 \subsection{FETCH\_JUMP\_16BITS}
 \begin{figure}[H]
     \centering
@@ -243,11 +241,21 @@ Il y a un register 16 bits qui parcourt les adresses. Pour ignorer le premier bi
     \caption{Mécanisme de saut}
     \label{fetch_jump}
 \end{figure}
+
 Le registre PC contient l'adresse actuelle. Un multiplexer placé avant va être à zéro tant que l'instruction 0xe7fc n'est pas rencontrée. Si elle est rencontrée, alors le bloc BRANCH\_INST (voir \ref{branchinst}) va renvoyer 1 à sa sortie \textbf{OP}, car les bits 15 à 11 de l'instruction 0xe7fc correspondent à 0x1c (instruction de saut), qui est précisément ce qui est recherché dans le bloc BRANCH\_INST. Ainsi, comme il renvoie un 1, c'est maintenant la sortie du bloc CALC\_ADR qui va être prise en compte par le multiplexers mentionné plus haut. \\
 Ce bloc CALC\_ADR prend en entrée \textbf{ADR} la sortie \textbf{INST\_OUT} du bloc BRANCH\_OUT, qui se trouve être, en héxadécimal, les bits 10 à 0 de l'instruction 0xe7fc, qui correspondent à 0xfffc, et entrée \textbf{PC} 0x0004. Dans le bloc CALC\_ADR, 0xfffc subit la suite d'opérations mentionnées dans la description de ce bloc (voir \ref{bl_calc_adr}), pour calculer l'adresse de saut, et donc la sortie sera 0x0000. Donc, à chaque fois qu'on va atteindre l'instruction 0xe7fc, on va sauter à l'adresse 0x0000.
 \\
 Dans ce circuit, il faut pouvoir effectuer un saut à l'adresse 0x0018, en enclenchant un bouton \textbf{JUMP}. 
 \\Pour ce faire, un multiplexer a été ajouté pour choisir entre l'adresse du PC (toujours additionnée à 2, pour permettre une adresse correcte lors du retrait du bit de poids faible (comme expliqué dans le bloc FETCH\_16BITS), ou l'adresse 0x0030. Ainsi, lorsqu'on fait passer le multiplexer à 1 (grâce au pin \textbf{JUMP}, c'est l'adresse 0x0030 qui va être utilisée. Comme on retire toujours le bit de poids faible, cette adresse se retrouve divisée par 2 et on obtient bien 0x0018.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/CHRONO_FETCH_JUMP.png}
+    \caption{Chronogramme jump}
+    \label{chrono_jump}
+\end{figure}
+
+Le chronogramme ci-dessus illustre le bon fonctionnement du circuit jump. Ici, le bouton \textbf{JUMP} est activé lorsque l'instruction est 0xe014. Au coup d'horologe suivant, l'adresse \textbf{PC} est 0x30, et l'instrucion 0x18cc, ce qui est le résultat attendu.
 \pagebreak
 
 \subsection{FETCH\_INTER\_16BITS}
@@ -310,6 +318,5 @@ Le chronogramme ci-dessus illustre le bon fonctionnement du programme. Le progra
 \section{Conclusion}
 Dans ce laboratoire, nous avons pu mettre en pratique la théorie vue en classe, qui peut parfois être un peu floue jusqu'à avoir un exemple concret. Nous avons appris à manipuler des adresses de mémoire et des instructions, compris le fonctionnement de ces dernières et la façon dont elles étaient segmentées, chaque portion de bits contenant une information qui permet d'effectuer les bonnes opérations aux bons endroits. \\
 L'utilisation de blocs permet d'ajouter une couche d'abstraction et donc de modularité lorsque la connexion de différents circuits (comme dans le main) est nécessaire.
-\section{Annexes}
 
 \end{document}
