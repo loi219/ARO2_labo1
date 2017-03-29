@@ -71,7 +71,7 @@
 \end{titlepage}
 
 \section{Objectifs du laboratoire}
-Ce laboratoire consistait en la réalisation d'un décodeur, qui comprenait aussi une partie gérant les instruction MOV et ADD. Son bon fonctionnement devait être testé à l'aide du main fourni dans le workspace du laboratoire.
+Ce laboratoire consistait en la réalisation d'un décodeur, qui comprenait aussi une partie gérant les instructions MOV et ADD. Son bon fonctionnement devait être testé à l'aide du main fourni dans le workspace du laboratoire.
 
 \section{Blocs Logisim}
 Nous avons décidé de séparer les blocs afin de permettre une meilleure modularité et abstraction du système DECODE.\\
@@ -133,7 +133,7 @@ Elle se caractérise par le code ci-dessous :
 \end{itemize}
 
 \medskip
-Nous avons donc deux code ARM différents, selon la valeur donnée pour RD, qui peut être une valeur imméiate (en héxadécimal). Ainsi, dans ce bloc, on a les sorties correspondant au registres et valeurs concernées, et on peut vérifier le type de donnée grâce à la sortie \textbf{isMovImm} qui va indiquer le type de donnée. La sortie \textbf{isMOV} va être activée, indépendamment de s'il s'agit d'une valeur immédiate ou non, puisqu'elle indique uniquement s'il y a eu une instruction MOV.
+Nous avons donc deux codes ARM différents, selon la valeur donnée pour RD, qui peut être une valeur immédiate (en héxadécimal). Ainsi, dans ce bloc, on a les sorties correspondant au registres et valeurs concernées, et on peut vérifier le type de donnée grâce à la sortie \textbf{isMovImm} qui va indiquer le type de donnée. La sortie \textbf{isMOV} va être activée, indépendemment de s'il s'agit d'une valeur immédiate ou non, puisqu'elle indique uniquement s'il y a eu une instruction MOV.
 
 
 \subsection{ADD\_INST} \label{addinst}
@@ -170,7 +170,7 @@ L'instruction ADD se présente comme suit:\\
     \hline     
     \end{tabular}
      \medskip \\
-    Le circuit ADD fonctionne ce cette manière: les bits 15-13 doivent être à 0, et passent donc dans une porte NOR. Si la sortie est à 1, c'est que les 3 bits sont à zéro (ce que l'on cherche ici). Les bits 12-11, quant à eux, doivent être à 1. Ils passent donc dans une porte AND pour vérifier que ce soit le cas. Le bit 10 indique s'il d'agit d'une valeur immédiate (1) ou non (0). Le bit 9 insique s'il agit d'un ADD (0) ou d'un SUB (1), ainsi, il est suivi d'un NOT pour obtenir un 1 s'il s'agit bien d'une instruction ADD. Les bits 8-6 correspondent à l'offset, et les bits 7-6 au registre source 1 s'il n'y a pas de valeur immédiate. Les bits 4-3 correspondent au registre source 2, et les bits 1-0 au registre destination.
+    Le circuit ADD fonctionne de cette manière: les bits 15-13 doivent être à 0, et passent donc dans une porte NOR. Si la sortie est à 1, c'est que les 3 bits sont à zéro (ce que l'on cherche ici). Les bits 12-11, quant à eux, doivent être à 1. Ils passent donc dans une porte AND pour vérifier que ce soit le cas. Le bit 10 indique s'il d'agit d'une valeur immédiate (1) ou non (0). Le bit 9 indique s'il agit d'un ADD (0) ou d'un SUB (1), ainsi, il est suivi d'un NOT pour obtenir un 1 s'il s'agit bien d'une instruction ADD. Les bits 8-6 correspondent à l'offset, et les bits 7-6 au registre source 1 s'il n'y a pas de valeur immédiate. Les bits 4-3 correspondent au registre source 2, et les bits 1-0 au registre destination.
     La sortie est précédé d'un porte AND qui vérifie que les critères permettant de reconnaître qu'il s'agit bien d'une instruction ADD.
     
     
@@ -210,7 +210,7 @@ En sortie, deux MUX permettent de choisir le registre dont on veut les données 
 \subsection{DECODE}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{src/DECODE.png}
+    \includegraphics[width=1\textwidth]{src/DECODE_V2.png}
     \caption{Decode}
     \label{decode_img}
 \end{figure}
@@ -229,7 +229,7 @@ En sortie, deux MUX permettent de choisir le registre dont on veut les données 
 \end{itemize}
 \medskip
 Les sorties des blocs \textbf{MOV\_INST} et \textbf{ADD\_INST} étant toutes reliées à des entrées du bloc \textbf{REGISTERS\_16BITS}, le \textbf{DECODE} sera expliqué en décrivant les liens par rapport aux différentes entrées du bloc \textbf{REGISTER\_16BITS}. \medskip \\
-\textbf{W\_DATA}: cette entrée est reliée aux sorties \textbf{Imm} du \textbf{MOV\_INST} et \textbf{Rm} du bloc \textbf{ADD\_INST}. Elle va prendre les valeurs immédiate en sortie de MOV et ADD, selon l'instruction donnée. Imm correpond à la valeur immédiate de l'instruction MOV et est sur 8 bit, elle passe donc dans un EXTEND qui permet de l'étendre à 16 bits. Rm est le registre source 1 de l'ADD. Il peut être sous forme de valeur immédiate ou non, c'est pourquoi il passe tout d'abord dans un démultiplexer, donc la sortie 0 correspond à une valeur immédiate, et va être reliée à un EXTEND qui va étendre la valeur sur 16 bit. Les deux valeurs immédiates (de MOV et de ADD) sur 16 bits sont reliées à un multiplexer. Ce dernier va envoyer la valeur en sortie de MOV si IsAdd (qui indique s'il y a une instruction ADD) est à 0, et la valeur en sortie de ADD si IsAdd est à 1. \medskip \\
+\textbf{W\_DATA}: cette entrée est reliée aux sorties \textbf{Imm} du \textbf{MOV\_INST} et \textbf{Rm} du bloc \textbf{ADD\_INST}. Elle va prendre les valeurs immédiates en sortie de MOV et ADD, selon l'instruction donnée. Imm correpond à la valeur immédiate de l'instruction MOV et est sur 8 bits, elle passe donc dans un EXTEND qui permet de l'étendre à 16 bits. Rm est le registre source 1 de l'ADD. Il peut être sous forme de valeur immédiate ou non, c'est pourquoi il passe tout d'abord dans un démultiplexer, donc la sortie 0 correspond à une valeur immédiate, et va être reliée à un EXTEND qui va étendre la valeur sur 16 bit. Les deux valeurs immédiates (de MOV et de ADD) sur 16 bits sont reliées à un multiplexer. Ce dernier va envoyer la valeur en sortie de MOV si IsAdd (qui indique s'il y a une instruction ADD) est à 0, et la valeur en sortie de ADD si IsAdd est à 1. \medskip \\
 \textbf{RnInRd}: prend en entrée un NOT IsMovImm, qui indique que la valeur de l'instruction MOV n'est pas immédiate.\medskip \\
 \textbf{Rn}: prend en entrée le registre source 1, soit en sortie de \textbf{ADD\_INST} soit en sortie de \textbf{MOV\_INST}. Le bloc à choisir est déterminé par un multiplexer, qui est à 1 si IsAdd est activé.\medskip \\
 \textbf{Rm}: prend en entrée le registre source en sortie de \textbf{ADD\_INST}, si celui-ci n'est pas une valeur immédiate (vérifié par un multiplexer).
@@ -238,11 +238,9 @@ Les sorties des blocs \textbf{MOV\_INST} et \textbf{ADD\_INST} étant toutes rel
 \medskip \\
 \textbf{WRITE\_EN}: s'active si on a une instruction MOV ou ADD. Ainsi, est relié à une porte OR qui prend en entrée IsAdd et IsMov.
 \medskip \\
-\textbf{Rd}: l'entrée Rd du REGISTER prend en entrée la sortie Rd du bloc \textbf{ADD\_INST} ou du bloc \textbf{MOV\_INST}, selon l'instruction voulue (choisie par un multiplexer dont la valeur est déterminée par IsAdd). Le registre destination du bloc \textbf{MOV\_INST} peut être une valeur immédiate ou non, raison pour laquelle il y a un multiplexer prenant en entrée les valeurs immédiate (qu'il prend en compte à 1) et non immédiate de ce bloc (qu'il prend en compte à 0), et qui passe à 1 lorsque IsMovImm (qui indique si la valeur est immédiate) est activée.
+\textbf{Rd}: l'entrée Rd du REGISTER prend en entrée la sortie Rd du bloc \textbf{ADD\_INST} ou du bloc \textbf{MOV\_INST}, selon l'instruction voulue (choisie par un multiplexer dont la valeur est déterminée par IsAdd). Le registre destination du bloc \textbf{MOV\_INST} peut être une valeur immédiate ou non, raison pour laquelle il y a un multiplexer prenant en entrée les valeurs immédiates (qu'il prend en compte à 1) et non immédiate de ce bloc (qu'il prend en compte à 0), et qui passe à 1 lorsque IsMovImm (qui indique si la valeur est immédiate) est activée.
 \medskip \\
 Les deux dernière entrées du bloc (clk et CLR) sont simplement l'horloge et le reset.
-
-
 
 \subsection{main}
 \begin{figure}[H]
@@ -252,10 +250,9 @@ Les deux dernière entrées du bloc (clk et CLR) sont simplement l'horloge et le
     \label{main_img}
 \end{figure}
 
-Le main program  nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction:
+Le main program nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction: \medskip
 
 \begin{tabular}{|c|c|c|c|}
-    
     \hline
     INST & Rd & Rn  & Rm  \\
     \hline
@@ -272,15 +269,16 @@ Le main program  nous a permis de contrôler le bon fonctionnement de notre DECO
     MOV  & r3 & r0   &    \\
     \hline
 \end{tabular}
-    
-    
 
+Nous avons relevé le chronogramme ci-dessous pour vérifier ces instructions:
 
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/CHRONO_DECODE.png}
+    \caption{Main program}
+    \label{main_img}
+\end{figure}
 
 \section{Conclusion}
-Dans ce laboratoire, nous avons pu mettre en pratique la théorie vue en classe, qui peut parfois être un peu floue jusqu'à avoir un exemple concret. Nous avons appris à manipuler des adresses de mémoire et des instructions, compris le fonctionnement de ces dernières et la façon dont elles étaient segmentées, chaque portion de bits contenant une information qui permet d'effectuer les bonnes opérations aux bons endroits. \\
-Nous avons remarqué que la séparation des gros circuits en plus petits circuits permettait une bien meilleure lisibilité, ainsi nous avons séparé l'entier du circuit.
-\section{Annexes}
 
 \end{document}
