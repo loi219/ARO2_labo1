@@ -331,7 +331,7 @@ Elle se caractérise par le code ci-dessous :
 \end{itemize}
 
 \medskip
-Nous avons donc deux code ARM différents, selon la valeur donnée pour RD, qui peut être une valeur imméiate (en héxadécimal). Ainsi, dans ce bloc, on a les sorties correspondant au registres et valeurs concernées, et on peut vérifier le type de donnée grâce à la sortie \textbf{IsMovImm} qui va indiquer le type de donnée. La sortie \textbf{IsMov} va être activée, indépendamment de s'il s'agit d'une valeur immédiate ou non, puisqu'elle indique uniquement s'il y a eu une instruction MOV.
+Nous avons donc deux codes ARM différents, selon la valeur donnée pour RD, qui peut être une valeur immédiate (en héxadécimal). Ainsi, dans ce bloc, on a les sorties correspondant au registres et valeurs concernées, et on peut vérifier le type de donnée grâce à la sortie \textbf{IsMovImm} qui va indiquer le type de donnée. La sortie \textbf{IsMov} va être activée, indépendamment de s'il s'agit d'une valeur immédiate ou non, puisqu'elle indique uniquement s'il y a eu une instruction MOV.
 
 
 
@@ -417,7 +417,7 @@ Les deux dernière entrées du bloc (clk et CLR) sont simplement l'horloge et le
     \label{main_img}
 \end{figure}
 
-Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction:
+Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction: \medskip
 
 \begin{tabular}{|c|c|c|c|}
     
@@ -426,7 +426,7 @@ Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECOD
     \hline
     MOV  & r1 & \#2  &    \\
     \hline
-    MOV  & r1 & \#2  &    \\
+    MOV  & r3 & \#25 &    \\
     \hline
     ADD  & r2 & r1   & r3 \\
     \hline
@@ -437,11 +437,31 @@ Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECOD
     MOV  & r3 & r0   &    \\
     \hline
 \end{tabular}
-    
+
+Le chronogramme suivant a permis de contrôler la bonne éxécution des instructions présentes dans le fichier fourni main.S décrit ci-dessus.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/CHRONO_DECODE.png}
+    \caption{Chonogramme decode}
+    \label{chrono_decode}
+\end{figure}
+\pagebreak
+
+Pour s'assurer de la validité des données présentes dans les registres de la banque de regitres, voici le détail du résultat des instructions dans chaque registre:
+\begin{enumerate}
+    \item r1 <- 0x0002
+    \item r3 <- 0x0019
+    \item r2 <- 0x001b
+    \item r1 <- 0x000c
+    \item r0 <- 0x0027
+    \item r3 <- 0x0027
+\end{enumerate}
+
+À la fin des instructions, il y a donc: r0=0x0027, r1=0x000c, r2=0001b et r3=0x0027.
+Dans le chronogramme, il y a effectivement les valeurs suivantes à chaque registre. En sortie du main, dans Rn et Rm se trouvent les valeurs 0x0027, et il s'agit bien des valeurs qu'on avait en registre source et qui ont été mises dans le registre destination.
 
 \section{Conclusion}
-Dans ce laboratoire, nous avons pu mettre en pratique la théorie vue en classe, qui peut parfois être un peu floue jusqu'à avoir un exemple concret. Nous avons appris à manipuler des adresses de mémoire et des instructions, compris le fonctionnement de ces dernières et la façon dont elles étaient segmentées, chaque portion de bits contenant une information qui permet d'effectuer les bonnes opérations aux bons endroits. \\
-Nous avons remarqué que la séparation des gros circuits en plus petits circuits permettait une bien meilleure lisibilité, ainsi nous avons séparé l'entier du circuit.
-\section{Annexes}
+Ce laboratoire était la suite directe du laboratoire fetch, et a permis de faire les liens entre ces deux parties. Comme pour le laboratoire précédent, plusieurs petits circuits ont été créés séparéments pour ensuite les réunir dans le decode, pour plus de lisibilités. Le bloc permettant de reconnaître l'instruction MOV avait déjà été réalisé pour la partie fetch et nous avons pu nous en inspirer. L'ensemble de ce laboratoire nous permis de mieux comprendre le fonctionnement de la partie decode, et des instructions MOV et ADD.
 
 \end{document}
