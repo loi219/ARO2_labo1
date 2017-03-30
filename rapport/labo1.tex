@@ -102,7 +102,7 @@ Nous avons décidé de séparer les blocs afin de permettre une meilleure modula
 \begin{itemize}
     \item     Rd: registre destination
     \item     Rn: registre source
-    \item     OP: s'active si les bits de 15 à 9 sont égal à $0001110$ (0x70)
+    \item     OP: s'active si les bits de 15 à 9 sont égal à $0001110000$ (0x70)
 \end{itemize}
 
 \medskip
@@ -230,12 +230,9 @@ Si, par exemple, l'entrée \textbf{ADR} 0xfffc, et le \textbf{PC} 0x0004 (cas qu
     \item     PC\_IN: adresse en sortie du splitter
 \end{itemize}
 \medskip
-<<<<<<< HEAD
-Ce circuit permet de parcourir les adresses en mémoire. On a un register 16 bits qui parcourt les adresses. Comme on veut ignorer la première adresse (0), un splitter à la sortie du registre va prendre 15 bits uniquement, et le bit de poids faible ne va pas être retenu. La raison de la suppression du bit de poids faible, est que les adresses sont par bloc de 2 bytes, et auront donc toujours un nombre pair. Ainsi, le bit de poids faible n'est pas signification puisqu'il sera toujours à 0. Puisqu'on veut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse on divise l'adresse par deux, on ajoute un additionneur +2 au début du regiter. Cela va permettre de doubler l'adresse, et ainsi, en supprimant de bit de poids faible, on obtient l'adresse attendue. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
-=======
 Ce circuit permet de parcourir les adresses en mémoire. \\
 Il y a un register 16 bits qui parcourt les adresses. Pour ignorer le premier bit (0), un splitter à la sortie du registre va prendre 15 bits uniquement (1..15), et le bit de poids faible ne va pas être retenu. Mais puisqu'il faut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse elle est divisée par deux, on ajoute un additionneur +2 au début du register. Cela va permettre de doubler l'adresse, et ainsi, en supprimant de bit de poids faible, on obtient l'adresse attendue. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
->>>>>>> 2d10c84d805f7b661152fd7edecbd143e27f54c3
+
 \subsection{FETCH\_JUMP\_16BITS}
 \begin{figure}[H]
     \centering
@@ -282,13 +279,10 @@ Ce bloc regroupe tous les blocs précédent, et permet de simuler une interrupti
 \medskip
 Une grande partie de ce circuit fonctionne comme le précédent, à savoir: un MUX permet de choisir entre l'adresse à laquelle est additionnée 2 à chaque coup d'horloge, ou l'adresse 0x30, qu'on veut atteindre lorsque l'on presse le bouton \textbf{INTER}. On a ensuite ensuite un registre 16 bits, dont on ignore le dernier bit en sortie. Grâce au +2 en amont, l'adresse est correcte lorsqu'elle est transmise à la mémoire. On peut facilement le vérifier grâce à la sortie \textbf{PC\_IN}. Ensuite, nous retrouvons inévitablement la mémoire, dont l'instruction de sortie est déterminée par l'adresse \textbf{PC\_IN} en entrée de celle-ci.\medskip
 
-<<<<<<< HEAD
-La partie suivante diffère légèrement. Il y a tout d'abord le bloc \text{BRANCH\_INST} qui permet de détecter les inctructions de saut. Ainsi, l'instruction 0xe7fa en mémoire est atteinte (à l'adresse 0x0004), les bits 15 à 11 de l'instruction équivalent à 0b11100. Additionnés à 0x1c dans \textbf{BRANCH\_INST}, il y a bien un bit d'overflow, et l'instruction JUMP va donc être délenchée. En sortie op, il y aura, comme expliqué dans le bloc \textbf{BRANCH\_INST} (voir ref \ref{branchinst}), les bits 10-0 de 0xe7fa, donc 0xfffa. Ces bits sont en entrée dans le bloc \textbf{CALC\_ADR}, qui va, comme expliqué précédemment, effectuer les diverses opérations qui permettent de caculer l'adresse de saut. Cette adresse sera égale à 0x0000, ainsi à chaque fois que l'instruction 0xe7fa est effectuée, un saut à l'adresse 0x0000 de la mémoire est effectué.\\
-L'interupteur \textbf{INTER}, lorsqu'il est pressé, permet de choisir l'adresse 0x30 et donc de faire un saut à l'adresse 0x30 dans la mémoire. L'INTER est aussi relié au registre LR. Ainsi, lorsque INTER est activé, l'adresse PC est chargée dans le LR, juste avant qu'il passe à 0x30.\medskip \\
-=======
+
 La partie suivante diffère légèrement. On retrouve d'abord le bloc \text{BRANCH\_INST} qui permet de détecter les inctructions de saut. Ainsi, lorsque l'on atteint l'instruction 0xe7fa en mémoire (à l'adresse 0x0004), les bits 15 à 11 de l'instruction équivalent à 0b11100. Additionné à 0x1c dans \textbf{BRANCH\_INST}, on a bien un bit d'overflow et donc l'instruction de saut va être délenchée. En sortie \textbf{OP}, on aura, comme expliqué dans le bloc \textbf{BRANCH\_INST} (voir \ref{branchinst}), les bits 10-0 de 0xe7fa, donc 0xfffa. Ces bits sont en entrée dans le bloc \textbf{CALC\_ADR}, qui va, comme expliqué précédemment, effectuer les diverses opérations qui permettent de caculer l'adresse de saut. Cette adresse sera égale à 0x0000, ainsi à chaque fois que l'instruction 0xe7fa est effectuée, on retrourne à l'adresse 0x0000 de la mémoire.\\
 L'interrupteur \textbf{INTER}, lorsqu'il est pressé, permet de choisir l'adresse 0x30 et donc de faire un saut à l'adresse 0x30 dans la mémoire. L'INTER est aussi relié au registre LR. Ainsi, lorsque INTER est activé, l'adresse suivante du PC est chargée dans le LR, juste avant qu'il passe à 0x30.\medskip \\
->>>>>>> 2d10c84d805f7b661152fd7edecbd143e27f54c3
+
 
 Le bloc \textbf{MOV\_INST} permet de détecter l'instruction MOV. Il va détecter si les bits 15 à 6 sont égal à 0x70 (MOV). Ici, l'instruction à détecter est 0x1c2c. Les bits 15-6 de cette instruction sont 0b0001110000, ce qui correspond bien à 0x70. 
 \\Ainsi, l'instruction MOV va être activée. Le registre source (ici r5) correspond aux bits 5-3 et le registre destination (ici r4) correspond aux bits 2-0. On peut voir sur la figure ci-dessous la détection de l'instruction MOV, et les registres source et destination en sortie de \textbf{MOV\_INST}
@@ -303,6 +297,6 @@ Le bloc \textbf{MOV\_INST} permet de détecter l'instruction MOV. Il va détecte
 \section{Conclusion}
 Dans ce laboratoire, nous avons pu mettre en pratique la théorie vue en classe, qui peut parfois être un peu floue jusqu'à avoir un exemple concret. Nous avons appris à manipuler des adresses de mémoire et des instructions, compris le fonctionnement de ces dernières et la façon dont elles étaient segmentées, chaque portion de bits contenant une information qui permet d'effectuer les bonnes opérations aux bons endroits. \\
 L'utilisation de blocs permet d'ajouter une couche d'abstraction et donc de modularité lorsque la connexion de différents circuits (comme dans le main) est nécessaire.
-\section{Annexes}
+
 
 \end{document}

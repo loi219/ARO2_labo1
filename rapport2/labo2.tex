@@ -246,6 +246,26 @@ Le circuit main nous a permis de contrôler le bon fonctionnement de notre \text
     \hline
 \end{tabular}
 
+\pagebreak
+Le chronogramme suivant a permis de contrôler la bonne éxécution des instructions présentes dans le fichier fourni main.S décrit ci-dessus.\\
+Toutes les valeurs sont en hexadécimal.
+\begin{itemize}
+    \item     INST: instruction courante
+    \item     R0 à R3: registre et leur valeur
+    \item    W\_DATA: valeur immédiate courante si utilisé
+    \item    OUT\_DATA: sortie actuelle de la banque de registre
+    \item    Rd: Registre destination utilisé
+    \item    Rn: Registre source utilisé
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.3\textwidth]{src/CHRONO_MAIN.png}
+    \caption{Chonogramme decode}
+    \label{chrono_decode}
+\end{figure}
+\pagebreak
+
 \paragraph{Afin de tester} les valeurs de notre circuit, un autre tableau avec les valeurs des registres qui changent pendant le fonctionnement:\\
 
 \begin{tabular}{|c|c|c|c|c|}    
@@ -434,6 +454,7 @@ Les deux dernière entrées du bloc (clk et CLR) sont simplement l'horloge et le
 
 Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction: \\
 
+
 \begin{tabular}{|c|c|c|c|}
     
     \hline
@@ -453,11 +474,25 @@ Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECOD
     \hline
 \end{tabular}
 
+\pagebreak
 Le chronogramme suivant a permis de contrôler la bonne éxécution des instructions présentes dans le fichier fourni main.S décrit ci-dessus.
+Toutes les valeurs sont en hexadécimal.
+\begin{itemize}
+    \item     INST: instruction courante
+    \item     R0 à R3: registre et leur valeur
+    \item    W\_DATA: valeur immédiate courante si utilisé
+    \item    OUT\_DATA\_Rm: sortie actuelle du registre Rm
+    \item    OUT\_DATA\_Rn: sortie actuelle du registre Rn    
+    \item    Rd: Registre destination utilisé
+    \item    Rn: Registre source 2 utilisé
+    \item    Rm: Registre source 1 utilisé
+\end{itemize}
+On voit bien que les registres stockent les valeurs qui sont écrite dans le fichier et qu'ils sont correctement sélectionnés grâce aux entrées Rd, Rn et Rm.\\
+La sortie OUT\_DATA\_Rm et l'entrée Rm est à 0 lors de l'instruction 0x210C et 0x1C03, car c'est une instruction MOV donc elle doit être nulle sinon elle altére le résultat de W\_DATA.\\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{src/CHRONO_DECODE.png}
+    \includegraphics[width=1.3\textwidth]{src/Et4_CHRONO_MAIN.png}
     \caption{Chonogramme decode}
     \label{chrono_decode}
 \end{figure}
@@ -482,5 +517,26 @@ Ce laboratoire était la suite directe du laboratoire fetch, et a permis de fair
 créés séparéments pour ensuite les réunir dans le decode, pour plus de lisibilité.\\
 Le bloc permettant de reconnaître l'instruction MOV avait déjà été réalisé pour la partie fetch et nous avons pu nous en inspirer. L'ensemble de ce laboratoire nous permis de mieux comprendre le fonctionnement de la partie decode, et des instructions MOV et ADD.\\
 L'instruction 1c03 nous a posé problème car nous avions mal géré la détection du MOV et c'est grâce à cela que nous avons compris que le MOV n'était qu'une instruction ADD avec une valeur immédiate à 0.
+
+\section{Annexe}
+\subsection{Test de la banque de registre}
+Dans la 1ère capture d'écran, le Registre 3 à comme valeur 0x201b et il est sélectionné en tant que Rd, la donnée choisie est affichée correctement dans OUT\_DATA.\\
+Ensuite l'entrée RnInRd est activée donc ce n'est pas une valeur immédiate qui sera écrite dans le Regsitre 1 (sélectionné par Rn) mais bien la donnée contenue dans R3.\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.3\textwidth]{src/TEST_REGISTERS_1.png}
+    \caption{Test avant activation de clk}
+    \label{test_1}
+\end{figure}
+    
+Après activation de l'horloge, la valeur de R3 à bien été écrite dans le registre 1.    
+\begin{figure}[H]
+    \includegraphics[width=1.3\textwidth]{src/TEST_REGISTERS_2.png}
+    \caption{Test après activation de clk}
+    \label{test_2}
+\end{figure}
+
+
 
 \end{document}
