@@ -85,7 +85,7 @@ Nous avons donc décidé de séparer les blocs afin de permettre une meilleure m
 \end{itemize}
 
 \subsection{MOV\_INST}
-
+Cette instruction MOV Rd, Rn est en fait une instruction ADD\ref{addinst} Rd, Rn, \#0 mais le champ de la valeur immédiate de celui-ci est mis à 0.
 \begin{figure}[H]
     \centering
     \includegraphics[width=.8\textwidth]{src/MOV_INST.png}
@@ -285,14 +285,14 @@ Les blocs existants du chapitre ci-dessus sont repris mais ne seront pas décrit
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.8\textwidth]{src/MOV_INST.png}
+    \includegraphics[width=.8\textwidth]{src/Et4_MOV_INST.png}
     \caption{Instruction MOV}
     \label{mov_img}
 \end{figure}
 \paragraph{Définition des entrées:}
 \begin{itemize}
     \item     INST: code complet
-    \item     0x70: code recherché pour un MOV avec valeur non immédiate
+    \item     0x0e: code recherché pour un MOV avec valeur non immédiate
     \item     0x04: code recherché pour un MOV avec valeur immédiate
 \end{itemize}
 
@@ -300,7 +300,7 @@ Les blocs existants du chapitre ci-dessus sont repris mais ne seront pas décrit
 \begin{itemize}
     \item     Rd: registre destination
     \item     Rn: registre source
-    \item     IsMov: s'active si les bits de 15 à 9 sont égaux à $0001110$ (0x70) ou à $0000010$ (0x04).
+    \item     IsMov: s'active si les bits de 15 à 9 sont égaux à $0001110$ (0x0e) ou à $0000010$ (0x04).
     \item     Imm: valeur immédiate
     \item     Rd\_Imm: registre destination pour MOV avec valeur immédiate
     \item     IsMovimm: s'active si on a un MOV avec valeur immédiate
@@ -318,7 +318,7 @@ Elle se caractérise par le code ci-dessous :
     \hline
     15 & 14 & 13 & 12 & 11 & 10 & 9 & 8 & 7 & 6                    & 5 & 4 & 3                & 2 & 1 & 0 \\
     \hline
-    0  & 0  & 0  & 1  & 1  & 1  & 0 & 0 & 0 & 0                    & 1 & 0 & 0                & 1 & 0 & 1 \\
+    0  & 0  & 0  & 1  & 1  & 1  & 0 & 0 & 0 & 0                    & \multicolumn{3}{|c|}{}   & \multicolumn{3}{|c|}{}\\
     \hline     
     \end{tabular}
 \\
@@ -338,7 +338,7 @@ Nous avons donc deux codes ARM différents, selon la valeur donnée pour RD, qui
 \subsection{ADD\_INST} \label{addinst}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.8\textwidth]{src/ADD_INST.png}
+    \includegraphics[width=.8\textwidth]{src/Et4_ADD_INST.png}
     \caption{Instruction ADD}
     \label{add_img}
 \end{figure}
@@ -353,32 +353,44 @@ Nous avons donc deux codes ARM différents, selon la valeur donnée pour RD, qui
     \item     Rd: registre destination
     \item     Rn: registre source 2
     \item     Rm: registre source 1
-    \item     isAdd: s'active si l'instruction ADD est détectée
-    \item     isImm: s'active s'il y a une valeur immédiate
+    \item     IsAdd: s'active si l'instruction ADD est détectée
+    \item     IsImm: s'active s'il y a une valeur immédiate
 \end{itemize}
 \medskip 
 
-L'instruction ADD se présente comme suit:
-
+L'instruction ADD est présente sous 2 formes:
+\paragraph{ADD Rd, Rn, \#$imme_3$}\mbox{}\\
 \begin{tabular}{|ccccccc|ccc|ccc|ccc|}
     \hline
-    \multicolumn{7}{|c|}{Code ARM}  & \multicolumn{3}{|c|}{Opcode} & \multicolumn{3}{|c|}{Rn} & \multicolumn{3}{|c|}{Rd}\\
+    \multicolumn{7}{|c|}{Code ARM}  & \multicolumn{3}{|c|}{$imme_3$} & \multicolumn{3}{|c|}{Rn} & \multicolumn{3}{|c|}{Rd}\\
+    \hline
+    15 & 14 & 13 & 12 & 11 & 10 & 9 & 8   & 7   & 6                  & 5 & 4 & 3                & 2   & 1   & 0 \\
+    \hline
+    0  & 0  & 0  & 1  & 1  & 1 & 0  &  \multicolumn{3}{|c|}{}        &  \multicolumn{3}{|c|}{}  & \multicolumn{3}{|c|}{} \\
+    \hline     
+    \end{tabular}
+
+\paragraph{ADD Rd, Rn, Rm}\mbox{}\\
+\begin{tabular}{|ccccccc|ccc|ccc|ccc|}
+    \hline
+    \multicolumn{7}{|c|}{Code ARM}  & \multicolumn{3}{|c|}{Rm} & \multicolumn{3}{|c|}{Rn} & \multicolumn{3}{|c|}{Rd}\\
     \hline
     15 & 14 & 13 & 12 & 11 & 10  & 9 & 8   & 7   & 6                 & 5 & 4 & 3                & 2   & 1   & 0 \\
     \hline
-    0  & 0  & 0  & 1  & 1  & 1/0 & 0 & 1/0 & 1/0 & 1/0               & 1/0 & 1/0 & 1/0                & 1/0 & 1/0 & 1/0 \\
+    0  & 0  & 0  & 1  & 1  & 0   & 0 &  \multicolumn{3}{|c|}{}     &  \multicolumn{3}{|c|}{}  & \multicolumn{3}{|c|}{} \\
     \hline     
-    \end{tabular}
-     \medskip \\
+    \end{tabular}    
+
+\vspace{1cm}    
     Le circuit ADD fonctionne ce cette manière: les bits 15-13 doivent être à 0, et passent donc dans une porte NOR. Si la sortie est à 1, c'est que les 3 bits sont à zéro (ce que l'on cherche ici). Les bits 12-11, quant à eux, doivent être à 1. Ils passent donc dans une porte AND pour vérifier que ce soit le cas. Le bit 10 indique s'il d'agit d'une valeur immédiate (1) ou non (0). Le bit 9 insique s'il agit d'un ADD (0) ou d'un SUB (1), ainsi, il est suivi d'un NOT pour obtenir un 1 s'il s'agit bien d'une instruction ADD. Les bits 8-6 correspondent à l'offset, et les bits 7-6 au registre source 1 s'il n'y a pas de valeur immédiate. Les bits 4-3 correspondent au registre source 2, et les bits 1-0 au registre destination.
-    La sortie est précédé d'un porte AND qui vérifie que les critères permettant de reconnaître qu'il s'agit bien d'une instruction ADD.
+    La sortie est précédé d'un porte AND qui vérifie que les critères permettant de reconnaître qu'il s'agit bien de l'instruction recherchée.
     
     
 \subsection{DECODE}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{src/DECODE.png}
-    \caption{Decode}
+    \includegraphics[width=1\textwidth]{src/Et4_DECODE.png}
+    \caption{Bloc Decode}
     \label{decode_img}
 \end{figure}
 
@@ -396,28 +408,31 @@ L'instruction ADD se présente comme suit:
 \end{itemize}
 \medskip
 Les sorties des blocs \textbf{MOV\_INST} et \textbf{ADD\_INST} étant toutes reliées à des entrées du bloc \textbf{REGISTERS\_16BITS}, le \textbf{DECODE} sera expliqué en décrivant les liens par rapport aux différentes entrées du bloc \textbf{REGISTER\_16BITS}. \medskip \\
-\textbf{W\_DATA}: cette entrée est reliée aux sorties \textbf{Imm} du \textbf{MOV\_INST} et \textbf{Rm} du bloc \textbf{ADD\_INST}. Elle va prendre les valeurs immédiate en sortie de MOV et ADD, selon l'instruction donnée. Imm correpond à la valeur immédiate de l'instruction MOV et est sur 8 bit, elle passe donc dans un EXTEND qui permet de l'étendre à 16 bits. Rm est le registre source 1 de l'ADD. Il peut être sous forme de valeur immédiate ou non, c'est pourquoi il passe tout d'abord dans un démultiplexer, donc la sortie 0 correspond à une valeur immédiate, et va être reliée à un EXTEND qui va étendre la valeur sur 16 bit. Les deux valeurs immédiates (de MOV et de ADD) sur 16 bits sont reliées à un multiplexer. Ce dernier va envoyer la valeur en sortie de MOV si IsAdd (qui indique s'il y a une instruction ADD) est à 0, et la valeur en sortie de ADD si IsAdd est à 1. \medskip \\
-\textbf{RnInRd}: prend en entrée un NOT IsMovImm, qui indique que la valeur de l'instruction MOV n'est pas immédiate.\medskip \\
-\textbf{Rn}: prend en entrée le registre source 1, soit en sortie de \textbf{ADD\_INST} soit en sortie de \textbf{MOV\_INST}. Le bloc à choisir est déterminé par un multiplexer, qui est à 1 si IsAdd est activé.\medskip \\
-\textbf{Rm}: prend en entrée le registre source en sortie de \textbf{ADD\_INST}, si celui-ci n'est pas une valeur immédiate (vérifié par un multiplexer).
-\medskip \\
-\textbf{RmDataZero}: est activé si on a une instruction MOV, puisqu'elle ne possède qu'un registre source. Ainsi, on relie la sortie IsMov, qui indique s'il s'agit a bien une instruction MOV.
-\medskip \\
-\textbf{WRITE\_EN}: s'active si on a une instruction MOV ou ADD. Ainsi, est relié à une porte OR qui prend en entrée IsAdd et IsMov.
-\medskip \\
-\textbf{Rd}: l'entrée Rd du REGISTER prend en entrée la sortie Rd du bloc \textbf{ADD\_INST} ou du bloc \textbf{MOV\_INST}, selon l'instruction voulue (choisie par un multiplexer dont la valeur est déterminée par IsAdd). Le registre destination du bloc \textbf{MOV\_INST} peut être une valeur immédiate ou non, raison pour laquelle il y a un multiplexer prenant en entrée les valeurs immédiate (qu'il prend en compte à 1) et non immédiate de ce bloc (qu'il prend en compte à 0), et qui passe à 1 lorsque IsMovImm (qui indique si la valeur est immédiate) est activée.
+\textbf{W\_DATA}: cette entrée est reliée aux sorties \textbf{Imm} du \textbf{MOV\_INST} et \textbf{Rm} du bloc \textbf{ADD\_INST}. Elle va prendre les valeurs immédiate en sortie de MOV et ADD, selon l'instruction donnée. Imm correpond à la valeur immédiate de l'instruction MOV et est sur 8 bit, elle passe donc dans un EXTEND qui permet de l'étendre à 16 bits. Rm est le registre source 1 de l'ADD. Il peut être sous forme de valeur immédiate ou non, c'est pourquoi il passe tout d'abord dans un démultiplexer, donc la sortie 0 correspond à une valeur immédiate, et va être reliée à un EXTEND qui va étendre la valeur sur 16 bit. Les deux valeurs immédiates (de MOV et de ADD) sur 16 bits sont reliées à un multiplexer. Ce dernier va envoyer la valeur en sortie de MOV si IsAdd (qui indique s'il y a une instruction ADD) est à 0, et la valeur en sortie de ADD si IsAdd est à 1.\\
+
+\paragraph{RnInRd}: prend en entrée un NOT IsMovImm, qui indique que la valeur de l'instruction MOV n'est pas immédiate.\\
+
+\paragraph{Rn}: prend en entrée le registre source 1, soit en sortie de \textbf{ADD\_INST} soit en sortie de \textbf{MOV\_INST}. Le bloc à choisir est déterminé par un multiplexer, qui est à 1 si IsAdd est activé.\\
+
+\paragraph{Rm}: prend en entrée le registre source en sortie de \textbf{ADD\_INST}, si celui-ci n'est pas une valeur immédiate (vérifié par un multiplexer).\\
+
+\paragraph{RmDataZero}:\footnote{Cette instruction aurait pu être gérée comme un ADD mais nous avons préféré garder cela comme un MOV} est activé si on a une instruction MOV, puisqu'elle ne possède qu'un registre source, il faut mettre la valeur contenue dans Rm à 0. Ainsi, elle est reliée la sortie IsMov, qui indique s'il s'agit a bien une instruction MOV.\\
+
+\paragraph{WRITE\_EN}: s'active si on a une instruction MOV ou ADD. Ainsi, est relié à une porte OR qui prend en entrée IsAdd et IsMov.\\
+
+\paragraph{Rd}: l'entrée Rd du REGISTER prend en entrée la sortie Rd du bloc \textbf{ADD\_INST} ou du bloc \textbf{MOV\_INST}, selon l'instruction voulue (choisie par un multiplexer dont la valeur est déterminée par IsAdd). Le registre destination du bloc \textbf{MOV\_INST} peut être une valeur immédiate ou non, raison pour laquelle il y a un multiplexer prenant en entrée les valeurs immédiate (qu'il prend en compte à 1) et non immédiate de ce bloc (qu'il prend en compte à 0), et qui passe à 1 lorsque IsMovImm (qui indique si la valeur est immédiate) est activée.
 \medskip \\
 Les deux dernière entrées du bloc (clk et CLR) sont simplement l'horloge et le reset.
 
 \subsection{main}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{src/main.png}
+    \includegraphics[width=1\textwidth]{src/Et4_main.png}
     \caption{Main program}
     \label{main_img}
 \end{figure}
 
-Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction: \medskip
+Le circuit main nous a permis de contrôler le bon fonctionnement de notre DECODE. Nous avions en instruction: \\
 
 \begin{tabular}{|c|c|c|c|}
     
@@ -450,18 +465,22 @@ Le chronogramme suivant a permis de contrôler la bonne éxécution des instruct
 
 Pour s'assurer de la validité des données présentes dans les registres de la banque de regitres, voici le détail du résultat des instructions dans chaque registre:
 \begin{enumerate}
-    \item r1 <- 0x0002
-    \item r3 <- 0x0019
-    \item r2 <- 0x001b
-    \item r1 <- 0x000c
-    \item r0 <- 0x0027
-    \item r3 <- 0x0027
+    \item r1 $\leftarrow$ 0x0002
+    \item r3 $\leftarrow$ 0x0019
+    \item r2 $\leftarrow$ 0x001b
+    \item r1 $\leftarrow$ 0x000c
+    \item r0 $\leftarrow$ 0x0027
+    \item r3 $\leftarrow$ 0x0027
 \end{enumerate}
 
 À la fin des instructions, il y a donc: r0=0x0027, r1=0x000c, r2=0001b et r3=0x0027.
-Dans le chronogramme, il y a effectivement les valeurs suivantes à chaque registre. En sortie du main, dans Rn et Rm se trouvent les valeurs 0x0027, et il s'agit bien des valeurs qu'on avait en registre source et qui ont été mises dans le registre destination.
+Dans le chronogramme, il y a effectivement les valeurs suivantes à chaque registre. \\
+En sortie du main, dans Rn et Rm se trouvent les valeurs 0x0027, et il s'agit bien des valeurs qu'on avait en registre source et qui ont été mises dans le registre destination.
 
 \section{Conclusion}
-Ce laboratoire était la suite directe du laboratoire fetch, et a permis de faire les liens entre ces deux parties. Comme pour le laboratoire précédent, plusieurs petits circuits ont été créés séparéments pour ensuite les réunir dans le decode, pour plus de lisibilités. Le bloc permettant de reconnaître l'instruction MOV avait déjà été réalisé pour la partie fetch et nous avons pu nous en inspirer. L'ensemble de ce laboratoire nous permis de mieux comprendre le fonctionnement de la partie decode, et des instructions MOV et ADD.
+Ce laboratoire était la suite directe du laboratoire fetch, et a permis de faire les liens entre ces deux parties. Comme pour le laboratoire précédent, plusieurs petits circuits ont été 
+créés séparéments pour ensuite les réunir dans le decode, pour plus de lisibilité.\\
+Le bloc permettant de reconnaître l'instruction MOV avait déjà été réalisé pour la partie fetch et nous avons pu nous en inspirer. L'ensemble de ce laboratoire nous permis de mieux comprendre le fonctionnement de la partie decode, et des instructions MOV et ADD.\\
+L'instruction 1c03 nous a posé problème car nous avions mal géré la détection du MOV et c'est grâce à cela que nous avons compris que le MOV n'était qu'une instruction ADD avec une valeur immédiate à 0.
 
 \end{document}
