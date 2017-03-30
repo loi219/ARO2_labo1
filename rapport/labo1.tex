@@ -233,6 +233,15 @@ Si, par exemple, l'entrée \textbf{ADR} 0xfffc, et le \textbf{PC} 0x0004 (cas qu
 Ce circuit permet de parcourir les adresses en mémoire. \\
 Il y a un register 16 bits qui parcourt les adresses. Pour ignorer le premier bit (0), un splitter à la sortie du registre va prendre 15 bits uniquement (1..15), et le bit de poids faible ne va pas être retenu. Mais puisqu'il faut parcourir toutes les adresses, et qu'en supprimant le bit de poids faible de l'adresse elle est divisée par deux, on ajoute un additionneur +2 au début du register. Cela va permettre de doubler l'adresse, et ainsi, en supprimant de bit de poids faible, on obtient l'adresse attendue. Ainsi, grâce à cet addtionneur, on sélectionne une nouvelle adresse à chaque coup d'horloge.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/CHRONO_FETCH.png}
+    \caption{Chronogramme fetch}
+    \label{chrono_fetch}
+\end{figure}
+
+Le chronogramme ci-dessus illustre le fonctionnement du fetch. L'entrée \textbf{PC} augmente de 2 en deux, et toutes les adresses sont parcourues.
+
 \subsection{FETCH\_JUMP\_16BITS}
 \begin{figure}[H]
     \centering
@@ -245,6 +254,15 @@ Ce bloc CALC\_ADR prend en entrée \textbf{ADR} la sortie \textbf{INST\_OUT} du 
 \\
 Dans ce circuit, il faut pouvoir effectuer un saut à l'adresse 0x0018, en enclenchant un bouton \textbf{JUMP}. 
 \\Pour ce faire, un multiplexer a été ajouté pour choisir entre l'adresse du PC (toujours additionnée à 2, pour permettre une adresse correcte lors du retrait du bit de poids faible (comme expliqué dans le bloc FETCH\_16BITS), ou l'adresse 0x0030. Ainsi, lorsqu'on fait passer le multiplexer à 1 (grâce au pin \textbf{JUMP}, c'est l'adresse 0x0030 qui va être utilisée. Comme on retire toujours le bit de poids faible, cette adresse se retrouve divisée par 2 et on obtient bien 0x0018.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/CHRONO_FETCH_JUMP.png}
+    \caption{Chronogramme jump}
+    \label{chrono_jump}
+\end{figure}
+
+Le chronogramme ci-dessus illustre le fonctionnement du mécanisme de saut. On constate que \textbf{PC\_IN} passe de l'adresse 0x0004 à l''adresse 0x0030, sans avoir parcouru les autres adresses, ainsi il y a bien eu un saut.
 \pagebreak
 
 \subsection{FETCH\_INTER\_16BITS}
@@ -294,6 +312,17 @@ Le bloc \textbf{MOV\_INST} permet de détecter l'instruction MOV. Il va détecte
     \label{fetch_inter}
 \end{figure}
 
+Voici le chronogramme correspondant à cette partie:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/CHRONO_FETCH_INTER_V2.png}
+    \caption{Chronogramme fetch interruption}
+    \label{chrono_inter}
+\end{figure}
+
+Lorsque l'intruction 0xe7fa (instruction de saut) est atteinte, un saut à l'adresse 0x0000 est effectué. Après, le bouton \textbf{INTER} a été pressé, et il y a bien un saut à l'adresse 0x0030. Le registre \textbf{LR} est chargé avec cette valeur. Les adresses sont ensuite normalement parcourues jusqu'à 0x1c2c, qui est aussi une instruction de saut. Au coup d'horloge suivant, l'adresse est bien à 0x0032 au lieu de 0x0038.
+\pagebreak
 \section{Conclusion}
 Dans ce laboratoire, nous avons pu mettre en pratique la théorie vue en classe, qui peut parfois être un peu floue jusqu'à avoir un exemple concret. Nous avons appris à manipuler des adresses de mémoire et des instructions, compris le fonctionnement de ces dernières et la façon dont elles étaient segmentées, chaque portion de bits contenant une information qui permet d'effectuer les bonnes opérations aux bons endroits. \\
 L'utilisation de blocs permet d'ajouter une couche d'abstraction et donc de modularité lorsque la connexion de différents circuits (comme dans le main) est nécessaire.
